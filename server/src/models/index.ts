@@ -1,6 +1,7 @@
-// import Customers from './Customers.js';
-// import Jobs from './Jobs.js';
-// import Employees from './Employees.js';
-// import Assignments from './Assignments.js';
+import Customer from './Customer.js';
+import Job from './Job.js';
+import Employee from './Employee.js';
+import Assignment from './Assignment.js';
+import Manager from './Manager.js';
 
-// export default { Customer, Jobs, Employees, Assignments };
+export default { Customer, Job, Employee, Assignment, Manager };
