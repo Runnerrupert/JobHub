@@ -38,6 +38,18 @@ return (
       </Menu>
       <Button type="primary" style={{ marginLeft: 'auto' }}>Logout</Button>
     </Header>
+
+  {/* Main Content Area */}
+  <Content style={{ padding: '20px' }}>
+        <Row gutter={16}>
+          {/* Left Sidebar - Calendar and Customers */}
+          <Col span={6}>
+            {/* Placeholder for Calendar */}
+            <Card title="Calendar" className="calendar-card" style={{ marginBottom: '20px' }}>
+              <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                Calendar goes here
+              </div>
+            </Card>
       
 
   return (
