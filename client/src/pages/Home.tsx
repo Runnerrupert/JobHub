@@ -50,6 +50,24 @@ return (
                 Calendar goes here
               </div>
             </Card>
+
+    {/* Customer and Job List */}
+    {customers.map((customer, index) => (
+              <Card key={index} className="customer-card">
+                <Text strong>{customer.name}</Text>
+                <p>{customer.address}</p>
+                <List
+                  size="small"
+                  dataSource={customer.jobs}
+                  renderItem={(job) => (
+                    <List.Item>
+                      {job.title} - {job.qty}
+                    </List.Item>
+                  )}
+                />
+              </Card>
+            ))}
+          </Col>
       
 
   return (
