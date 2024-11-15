@@ -69,11 +69,28 @@ return (
             ))}
           </Col>
       
-
-  return (
-    <div>
-      <h1>This is the Home Page</h1>
-    </div>
+{/* Right Content Area - Employees and Assigned Jobs */}
+<Col span={18}>
+            <Card title="List of Employees and Assigned Jobs">
+              <List
+                itemLayout="vertical"
+                dataSource={employees}
+                renderItem={(employee) => (
+                  <List.Item>
+                    <Title level={4}>{employee.name}</Title>
+                    <List
+                      size="small"
+                      dataSource={employee.assignedJobs}
+                      renderItem={(job) => <List.Item>{job}</List.Item>}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Card>
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
   );
 };
 
