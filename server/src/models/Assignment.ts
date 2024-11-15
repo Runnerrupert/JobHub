@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, type Document } from 'mongoose';
 
 interface IAssignment extends Document {
     jobId: Schema.Types.ObjectId;
