@@ -7,7 +7,7 @@ import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import './Home.css';
 
-const { Header, COntent } = Layout;
+const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
 const Home = () => {
@@ -26,6 +26,18 @@ const employees = [
   {name: 'John Doe', assignedJob: ['fix plumbing issues', 'install new sink']},
   {name: 'Jane Doe', assignedJob: ['install new sink', 'fix plumbing issues']},
 ];
+
+return (
+  <Layout>
+    {/* Navigation Bar */}
+    <Header className="header">
+      <Menu mode="horizontal" defaultSelectedKeys={['schedule']} style={{ flex: 1 }}>
+        <Menu.Item key="customers"><Link to="/customers">Customers</Link></Menu.Item>
+        <Menu.Item key="employees"><Link to="/employees">Employees</Link></Menu.Item>
+        <Menu.Item key="schedule"><strong>Schedule</strong></Menu.Item>
+      </Menu>
+      <Button type="primary" style={{ marginLeft: 'auto' }}>Logout</Button>
+    </Header>
       
 
   return (
