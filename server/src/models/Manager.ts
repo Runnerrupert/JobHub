@@ -1,7 +1,8 @@
-import { Schema, model, type Document } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 interface IManager extends Document {
+    _id: string;
     username: string;
     email: string;
     password: string;
