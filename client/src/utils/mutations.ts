@@ -17,7 +17,7 @@ export const CREATE_ACCOUNT = gql`
     login(email: $email, password: $password) {
       token
       manager {
-        _id
+        email
         username
       }
     }
