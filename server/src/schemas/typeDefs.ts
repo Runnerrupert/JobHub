@@ -3,7 +3,6 @@ const typeDefs =`
     type Customer {
 
     id: ID!
-
     name: String!
     email: String!
     phoneNumber: String
