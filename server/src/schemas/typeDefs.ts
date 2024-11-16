@@ -54,6 +54,17 @@ const typeDefs =`
     updatedAt: String
     }
 
+    type Auth {
+        token: ID!
+        manager: Manager
+    }
+
+    input ManagerInput {
+        name: String!
+        email: String!
+        password: String!
+    }
+
     type Query {
 
     customers: [Customer]
@@ -83,9 +94,12 @@ const typeDefs =`
 
     addAssignment(jobId: ID!, employeeId: ID! CreatedAt: String!): Assignment
     removeAssignment(id: ID!): Boolean
+
+    createAccount(input: ManagerInput): Auth
+    login(email: String!, password: String!): Auth
     }`
     
 
 
 
-    export default typeDefs
+export default typeDefs
