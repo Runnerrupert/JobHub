@@ -1,12 +1,23 @@
-// const typeDefs = `
+const typeDefs = `
+    type Auth {
+        token: ID!
+        manager: Manager
+    }
 
-//   type Query {
-    
-//   }
+    input ManagerInput {
+        name: String!
+        email: String!
+        password: String!
+    }
 
-//   type Mutation {
-   
-//   }
-// `;
+    type Query {
+        
+    }
 
-// export default typeDefs;
+    type Mutation {
+        createAccount(input: ManagerInput): Auth
+        login(email: String!, password: String!): Auth
+    }
+`;
+
+export default typeDefs;
