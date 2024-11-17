@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
 
-// add customer
-
+// Add customer
 export const ADD_CUSTOMER = gql`
   mutation AddCustomer($name: String!, $email: String!, $phoneNumber: String, $address: String) {
     addCustomer(name: $name, email: $email, phoneNumber: $phoneNumber, address: $address) {
@@ -16,10 +15,9 @@ export const ADD_CUSTOMER = gql`
   }
 `;
 
-// update customer
-
+// Update customer
 export const UPDATE_CUSTOMER = gql`
-  mutation UpdateCustomer($id: ID!, $name: String!, $email: String!, $phoneNumber: String, $address: String) {
+  mutation UpdateCustomer($id: ID!, $name: String, $email: String, $phoneNumber: String, $address: String) {
     updateCustomer(id: $id, name: $name, email: $email, phoneNumber: $phoneNumber, address: $address) {
       id
       name
@@ -32,18 +30,14 @@ export const UPDATE_CUSTOMER = gql`
   }
 `;
 
-// delete customer
-
+// Delete customer
 export const DELETE_CUSTOMER = gql`
   mutation DeleteCustomer($id: ID!) {
-    deleteCustomer(id: $id) {
-      id
-    }
+    deleteCustomer(id: $id)
   }
 `;
 
-// add job
-
+// Add job
 export const ADD_JOB = gql`
   mutation AddJob($title: String!, $description: String!, $status: String!, $dueDate: String!, $customerId: ID!) {
     addJob(title: $title, description: $description, status: $status, dueDate: $dueDate, customerId: $customerId) {
@@ -59,35 +53,30 @@ export const ADD_JOB = gql`
   }
 `;
 
-// update job
-
+// Update job
 export const UPDATE_JOB = gql`
-  mutation UpdateJob($id: ID!, $title: String!, $description: String!, $status: String!, $dueDate: String!, $customerId: ID!) {
+  mutation UpdateJob($id: ID!, $title: String, $description: String, $status: String, $dueDate: String, $customerId: ID) {
     updateJob(id: $id, title: $title, description: $description, status: $status, dueDate: $dueDate, customerId: $customerId) {
-    id
-    title
-    description
-    status
-    dueDate
-    customerId
-    createdAt
-    updatedAt
+      id
+      title
+      description
+      status
+      dueDate
+      customerId
+      createdAt
+      updatedAt
     }
   }
 `;
 
-// delete job
-
+// Delete job
 export const DELETE_JOB = gql`
   mutation DeleteJob($id: ID!) {
-    deleteJob(id: $id) {
-      id
-    }
+    deleteJob(id: $id)
   }
 `;
 
-// add employee
-
+// Add employee
 export const ADD_EMPLOYEE = gql`
   mutation AddEmployee($name: String!, $phoneNumber: String!, $jobTitle: String!, $hireDate: String!) {
     addEmployee(name: $name, phoneNumber: $phoneNumber, jobTitle: $jobTitle, hireDate: $hireDate) {
@@ -102,10 +91,9 @@ export const ADD_EMPLOYEE = gql`
   }
 `;
 
-// update employee
-
+// Update employee
 export const UPDATE_EMPLOYEE = gql`
-  mutation UpdateEmployee($id: ID!, $name: String!, $phoneNumber: String!, $jobTitle: String!, $hireDate: String!) {
+  mutation UpdateEmployee($id: ID!, $name: String, $phoneNumber: String, $jobTitle: String, $hireDate: String) {
     updateEmployee(id: $id, name: $name, phoneNumber: $phoneNumber, jobTitle: $jobTitle, hireDate: $hireDate) {
       id
       name
@@ -118,21 +106,17 @@ export const UPDATE_EMPLOYEE = gql`
   }
 `;
 
-// delete employee
-
+// Delete employee
 export const DELETE_EMPLOYEE = gql`
   mutation DeleteEmployee($id: ID!) {
-    deleteEmployee(id: $id) {
-      id
-    }
+    deleteEmployee(id: $id)
   }
 `;
 
-// add assignment 
-
+// Add assignment
 export const ADD_ASSIGNMENT = gql`
-  mutation AddAssignment($jobId: ID!, $employeeId: ID!) {
-    addAssignment(jobId: $jobId, employeeId: $employeeId) {
+  mutation AddAssignment($jobId: ID!, $employeeId: ID!, $createdAt: String!) {
+    addAssignment(jobId: $jobId, employeeId: $employeeId, createdAt: $createdAt) {
       id
       jobId
       employeeId
@@ -141,20 +125,16 @@ export const ADD_ASSIGNMENT = gql`
   }
 `;
 
-// remove assignment
-
+// Remove assignment
 export const REMOVE_ASSIGNMENT = gql`
   mutation RemoveAssignment($id: ID!) {
-    removeAssignment(id: $id) {
-      id
-    }
+    removeAssignment(id: $id)
   }
 `;
 
-// create account
-
+// Create account
 export const CREATE_ACCOUNT = gql`
-  mutation CreateAccount($input: ManagerInput) {
+  mutation CreateAccount($input: ManagerInput!) {
     createAccount(input: $input) {
       token
       manager {
@@ -168,8 +148,7 @@ export const CREATE_ACCOUNT = gql`
   }
 `;
 
-// login manager
-
+// Login manager
 export const LOGIN_MANAGER = gql`
   mutation LoginManager($email: String!, $password: String!) {
     login(email: $email, password: $password) {
