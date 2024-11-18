@@ -3,7 +3,6 @@ const typeDefs =`
     type Customer {
 
     id: ID!
-
     name: String!
     email: String!
     phoneNumber: String
@@ -81,15 +80,21 @@ const typeDefs =`
     type Mutation {
 
     addCustomer(name: String!, email: String!, phoneNumber: String, address: String): Customer
+
     updateCustomer(id: ID!, name: String, email: String, phoneNumber: String, address: String): Customer
+
     deleteCustomer(id: ID!): Boolean
 
     addJob(title: String!, description: String!, status: String!, dueDate: String!, customerId: ID!): Job
+
     updateJob(id: ID!, title: String, description: String, status: String, dueDate: String, customerId: ID): Job
+
     deleteJob(id: ID!): Boolean
 
     addEmployee(name: String!, phoneNumber: String!, jobTitle: String!, hireDate: String!): Employee
+
     updateEmployee(id: ID!, name: String, phoneNumber: String, jobTitle: String, hireDate: String): Employee
+    
     deleteEmployee(id: ID!): Boolean
 
     addAssignment(jobId: ID!, employeeId: ID! CreatedAt: String!): Assignment
