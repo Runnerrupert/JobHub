@@ -1,0 +1,12 @@
+[
+    {
+        "email": "incrediblemanager@manager.com",
+        "name": "testmanager",
+        "password": "managerpassword"
+    },
+    {
+        "email": "incrediblemanager2@manager.com",
+        "name": "testmanager2",
+        "password": "managerpassword2"
+    }
+]

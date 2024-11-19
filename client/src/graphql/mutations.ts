@@ -132,33 +132,27 @@ export const REMOVE_ASSIGNMENT = gql`
   }
 `;
 
-// Create account
-export const CREATE_ACCOUNT = gql`
-  mutation CreateAccount($input: ManagerInput!) {
-    createAccount(input: $input) {
+// login Account
+export const LOGIN_MANAGER = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       token
       manager {
         id
-        username
-        email
-        createdAt
-        updatedAt
+        name
       }
     }
   }
 `;
 
-// Login manager
-export const LOGIN_MANAGER = gql`
-  mutation LoginManager($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+// Create Account
+export const CREATE_ACCOUNT = gql`
+  mutation createAccount($input: CreateAccountInput!) {
+    createAccount(input: $input) {
       token
       manager {
         id
-        username
-        email
-        createdAt
-        updatedAt
+        name
       }
     }
   }
