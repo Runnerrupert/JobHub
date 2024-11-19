@@ -13,12 +13,14 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     try {
-        const { data } = await login({ variables: { email, password } });
-
-        Auth.login(data.login.token);
-        navigate("/")
+        const result = await login({ variables: { email, password }, });
+        if (result.data?.login?.token) {
+          Auth.login(result.data.login.token);
+          navigate("/home")
+        } else {
+          throw new Error("Login Failed: no token received");
+        }
     } catch (err) {
         console.log("Login Failed", err);
     }

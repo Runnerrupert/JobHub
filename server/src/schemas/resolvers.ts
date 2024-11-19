@@ -6,14 +6,14 @@ const { Manager } = models;
 
 interface Manager {
     _id: string;
-    username: string;
+    name: string;
     email: string;
     password: string;
 }
 
 interface AddManagerArgs {
     input: {
-        username: string;
+        name: string;
         email: string;
         password: string;
     }
@@ -35,35 +35,35 @@ const resolvers = {
 
         const manager = await Manager.create({ 
           email: input.email,
-          username: input.username,
+          name: input.name,
           password: hashedPassword,
          });
         // Sign a JWT token for the new manager
-        const token = signToken(manager.username, manager.email, manager._id);
+        const token = signToken(manager.name, manager.email, manager._id);
   
         return { token, manager };
     },
 
     login: async (_parent: unknown, { email, password }: { email: string; password: string }): Promise<{ token: string; manager: Manager }> => {
     // Find a profile by email
-    const manager = await Manager.findOne({ email });
+      const manager = await Manager.findOne({ email });
+      if (!manager) {
+          // If profile with provided email doesn't exist, throw an authentication error
+          throw AuthenticationError;
+      }
+      
+      // Check if the provided password is correct
+      const correctPw = await manager.isCorrectPassword(password);
+      console.log(correctPw);
 
-    if (!manager) {
-        // If profile with provided email doesn't exist, throw an authentication error
-        throw AuthenticationError;
-    }
+      if (!correctPw) {
+          // If password is incorrect, throw an authentication error
+          throw new AuthenticationError('Not Authenticated');
+      }
 
-    // Check if the provided password is correct
-    const correctPw = await manager.isCorrectPassword(password);
-
-    if (!correctPw) {
-        // If password is incorrect, throw an authentication error
-        throw new AuthenticationError('Not Authenticated');
-    }
-
-    // Sign a JWT token for the authenticated profile
-    const token = signToken(manager.username, manager.email, manager._id);
-    return { token, manager };
+      // Sign a JWT token for the authenticated profile
+      const token = signToken(manager.name, manager.email, manager._id);
+      return { token, manager };
     },
   },
 };

@@ -1,12 +1,12 @@
 import db from '../config/connection.js';
-import bcrypt from 'bcrypt';
 import managerSeeds from './managerData.json' assert { type: "json" };
 import models from '../models/index.js';
+import bcrypt from 'bcrypt';
 import cleanDB from './cleanDB.js';
 
 const { Manager } = models;
 
-const seedDatabase = async(): Promise<void> => {
+const seedDatabase = async (): Promise<void> => {
     try {
         await db();
         await cleanDB();
@@ -20,12 +20,12 @@ const seedDatabase = async(): Promise<void> => {
         }));
 
         await Manager.insertMany(hashedSeeds);
-        console.log("Seeding Finished!");
+        process.exit(0);
     } catch (error: unknown) {
         if (error instanceof Error) {
-          console.error('Error seeding database:', error.message);
+            console.error('Error seeding database:', error.message);
         } else {
-          console.error('Unknown error seeding database');
+            console.error('Unknown error seeding database');
         }
         process.exit(1);
     }

@@ -5,20 +5,20 @@ export const LOGIN_MANAGER = gql`
     login(email: $email, password: $password) {
       token
       manager {
-        _id
-        username
+        id
+        name
       }
     }
   }
 `;
 
 export const CREATE_ACCOUNT = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation createAccount($input: CreateAccountInput!) {
+    createAccount(input: $input) {
       token
       manager {
-        email
-        username
+        id
+        name
       }
     }
   }

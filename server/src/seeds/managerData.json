@@ -1,12 +1,12 @@
 [
     {
         "email": "incrediblemanager@manager.com",
-        "username": "testmanager",
+        "name": "testmanager",
         "password": "managerpassword"
     },
     {
         "email": "incrediblemanager2@manager.com",
-        "username": "testmanager2",
-        "password": "managerpassword"
+        "name": "testmanager2",
+        "password": "managerpassword2"
     }
 ]

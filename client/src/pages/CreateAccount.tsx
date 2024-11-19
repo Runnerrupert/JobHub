@@ -4,25 +4,23 @@ import { CREATE_ACCOUNT } from '../utils/mutations';
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 
+import Auth from '../utils/auth';
+
 const CreateAccount = () => {
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
-    const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+    const [createAccount, { loading, error }] = useMutation(CREATE_ACCOUNT);
 
     const navigate = useNavigate();
   // Checks if the user can be logged in based on information stored within the database
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
         try {
-            const result = await createAccount({ variables: { email, username, password }});
-            
-            if (result.data.createAccount.token) {
-                localStorage.setItem("token", data.createAccount.token);
-                navigate("/home");
-            }
+            const result = await createAccount({ variables: { input: { email, name, password }}});
+            Auth.login(result.data.createAccount.token);
+            navigate('/home');
         } catch (err) {
             console.error("Error creating account", err);
         }
@@ -47,8 +45,8 @@ const CreateAccount = () => {
                 <label>Username</label>
                 <input
                     type="text"
-                    value = {username}
-                    onChange = {(event) => setUsername(event.target.value)}
+                    value = {name}
+                    onChange = {(event) => setName(event.target.value)}
                     required
                 />
               </div>
@@ -56,7 +54,7 @@ const CreateAccount = () => {
                 <label>Password</label>
                 <input
                     type = "password"
-                    value = {username}
+                    value = {password}
                     onChange={(event) => setPassword(event.target.value)}
                     required
                     />
