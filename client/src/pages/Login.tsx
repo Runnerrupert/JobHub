@@ -1,7 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
-import { LOGIN_MANAGER } from '../utils/mutations';
+import { LOGIN_MANAGER } from '../graphql/mutations';
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {

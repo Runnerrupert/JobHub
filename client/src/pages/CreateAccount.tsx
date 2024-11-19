@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 // import { ChangeEvent } as well when ready for them -- TODO
-import { CREATE_ACCOUNT } from '../utils/mutations';
+import { CREATE_ACCOUNT } from '../graphql/mutations';
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 
