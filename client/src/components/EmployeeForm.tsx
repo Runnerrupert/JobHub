@@ -11,39 +11,39 @@ const EmployeeForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="customerName">Customer Name:</label>
+      <label htmlFor="employeeName">Employee Name:</label>
       <input
         type="text"
-        id="customerName"
+        id="employeeName"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <label htmlFor="customerEmail">E-mail:</label>
+      <label htmlFor="employeeEmail">E-mail:</label>
       <input
       type="email"
-      id="customerEmail"
+      id="employeeEmail"
       value={name}
       onChange={(e) => setName(e.target.value)}
       />
 
-      <label htmlFor="customerPhone">Phone Number:</label>
+      <label htmlFor="employeePhone">Phone Number:</label>
       <input
       type="tel"
-      id="customerPhone"
+      id="employeePhone"
       value={name}
       onChange={(e) => setName(e.target.value)}
       />
 
-      <label htmlFor="customerAddress">Address:</label>
+      <label htmlFor="role">Address:</label>
       <input
       type="text"
-      id="customerAddress"
+      id="role"
       value={name}
       onChange={(e) => setName(e.target.value)}
       />
 
-    <button type="submit">Add New Customer</button>
+    <button type="submit">Add New Employee</button>
     </form>
   );
 };

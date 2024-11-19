@@ -26,21 +26,21 @@ const EmployeeList: React.FC = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Role</th>
+                        <th>First Name | </th>
+                        <th>Last Name | </th>
+                        <th>Email | </th>
+                        <th>Phone | </th>
+                        <th>Role | </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {employee.map((customer: Employee) => (
-                        <tr key={customer.id}>
-                            <td>{customer.first_name}</td>
-                            <td>{customer.last_name}</td>
-                            <td>{customer.email}</td>
-                            <td>{customer.phone}</td>
-                            <td>{customer.role}</td>
+                    {employee.map((employee: Employee) => (
+                        <tr key={employee.id}>
+                            <td>{employee.first_name}</td>
+                            <td>{employee.last_name}</td>
+                            <td>{employee.email}</td>
+                            <td>{employee.phone}</td>
+                            <td>{employee.role}</td>
                         </tr>
                     ))}
                 </tbody>
