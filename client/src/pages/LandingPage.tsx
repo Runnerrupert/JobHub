@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import auth from "../utils/auth";
 
 const LandingPage = () => {
+
+    const navigate = useNavigate();
+
+    // Check login status if 
+    useEffect(() => {
+        if (auth.loggedIn()) {
+            navigate("/home"); 
+        } 
+    }, []);
+
     return (
         <div>
             <h1>This is the Landing Page</h1>

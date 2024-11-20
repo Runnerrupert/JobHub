@@ -38,11 +38,11 @@ const router = createBrowserRouter([
         element: <Customer />
       }, 
       {
-        path: '/',
+        path: '/employees',
         element: <Employee/>
       },
       {
-        path: '/',
+        path: '/jobs',
         element: <Jobs/>
       },
     ],
