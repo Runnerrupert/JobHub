@@ -24,7 +24,7 @@ const CustomerForm: React.FC = () => {
 const [formState, setFormState] = useState({
     name: '',
     email: '',
-    phonenumber: '',
+    phoneNumber: '',
     address: ''
 });
 
@@ -35,7 +35,7 @@ const [addCustomer, { loading, error }] = useMutation(ADD_CUSTOMER, {
       setFormState({
           name: '',
           email: '',
-          phonenumber: '',
+          phoneNumber: '',
           address: ''
       });
       setIsCustomerAdded(true);
@@ -80,7 +80,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsCustomerAdded(false);
     console.log('Form submitted');
-    addCustomer({ variables: { ...formState } }).catch((error) => {
+    addCustomer({ variables: { input: formState } }).catch((error) => {
         console.error('Error adding customer:', error);
     });
 };
@@ -112,8 +112,8 @@ return (
     <input
     type="tel"
     id="customerPhone"
-    name = "phonenumber"
-    value={formState.phonenumber}
+    name = "phoneNumber"
+    value={formState.phoneNumber}
     onChange={handleChange}
     required
     />

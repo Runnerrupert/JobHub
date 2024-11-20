@@ -11,6 +11,20 @@ const typeDefs =`
         jobs: [Job]
     }
 
+    input AddCustomerInput {
+        name: String!
+        email: String!
+        phoneNumber: String!
+        address: String!
+    }
+
+    input UpdateCustomerInput {
+        name: String
+        email: String
+        phoneNumber: String
+        address: String
+    }
+
     type Job {
         id: ID!
         title: String!
@@ -59,7 +73,7 @@ const typeDefs =`
     }
 
     type Query {
-        customers: [Customer]
+        customers: [Customer]!
         customer(id: ID!): Customer
         jobs: [Job]
         job(id: ID!): Job
@@ -72,9 +86,9 @@ const typeDefs =`
 
     type Mutation {
 
-        addCustomer(name: String!, email: String!, phoneNumber: String, address: String): Customer
+        addCustomer(input: AddCustomerInput!): Customer!
 
-        updateCustomer(id: ID!, name: String, email: String, phoneNumber: String, address: String): Customer
+        updateCustomer(id: ID!, input: UpdateCustomerInput): Customer!
 
         deleteCustomer(id: ID!): Boolean
 
