@@ -7,7 +7,9 @@ import NotFound from './pages/NotFound';
 import Customer from './pages/Customer';
 import Employee from './pages/Employee';
 import Jobs from './pages/Jobs';
-import LandingPage from './pages/LandingPage'
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import CreateAccount from './pages/CreateAccount';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
         element: <LandingPage />
       }, 
       {
+        path: '/login',
+        element: <Login />
+      }, 
+      {
+        path: '/create-account',
+        element: <CreateAccount />
+      }, 
+      {
         path: '/home',
         element: <Home />
       }, 
@@ -28,7 +38,7 @@ const router = createBrowserRouter([
         element: <Customer />
       }, 
       {
-        path: '/',
+        path: '/employee',
         element: <Employee/>
       },
       {

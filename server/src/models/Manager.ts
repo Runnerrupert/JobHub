@@ -1,8 +1,9 @@
-import { Schema, model, type Document } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 interface IManager extends Document {
-    username: string;
+    _id: string;
+    name: string;
     email: string;
     password: string;
     createdAt?: Date;
@@ -12,7 +13,7 @@ interface IManager extends Document {
 
 const managerSchema = new Schema<IManager>(
     {
-        username: {
+        name: {
             type: String,
             required: true,
             unique: true,
@@ -47,15 +48,18 @@ const managerSchema = new Schema<IManager>(
 
 managerSchema.pre<IManager>('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
-        const saltRounds = 10;
-        this.password = await bcrypt.hash(this.password, saltRounds);
+        if (!this.isModified('password') || bcrypt.getRounds(this.password) === 0) {
+            this.password = await bcrypt.hash(this.password, 10);  
+        }
     }
-
     next();
 });
 
 managerSchema.methods.isCorrectPassword = async function(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
+    console.log(`Your Password: ${password}, Other Password: ${this.password}`);
+    const result = bcrypt.compare(password, this.password);
+    console.log("comparison result: ", result);
+    return result;
 };
 
 const Manager = model<IManager>('Manager', managerSchema);
