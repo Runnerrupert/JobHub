@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import auth from '../utils/auth';
+import "./Navbar.css";
 
 const Navbar = () => {
   return (
