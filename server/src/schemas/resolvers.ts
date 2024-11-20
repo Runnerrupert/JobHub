@@ -68,7 +68,4 @@ const resolvers = {
   },
 };
 
-addCustomer(_,args){
-  return args
-
 export default resolvers;
