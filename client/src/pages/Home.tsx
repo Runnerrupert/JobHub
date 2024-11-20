@@ -1,4 +1,4 @@
-import { Layout, Menu, Button, Row, Col, Card, Typography, List } from "antd";
+import { Layout, Menu, Row, Col, Card, Typography, List } from "antd";
 import Navbar from "../components/Navbar";
 
 const { Header, Content } = Layout;
@@ -29,7 +29,6 @@ return (
       <Menu mode="horizontal" defaultSelectedKeys={['schedule']} style={{ flex: 1 }}>
         <Menu.Item key="schedule"><strong>Schedule</strong></Menu.Item>
       </Menu>
-      <Button type="primary" style={{ marginLeft: 'auto' }}>Logout</Button>
     </Header>
 
   {/* Main Content Area */}
@@ -54,7 +53,7 @@ return (
                   dataSource={customer.jobs}
                   renderItem={(job) => (
                     <List.Item>
-                      {job.title} - {job.qty}
+                      {job.title}
                     </List.Item>
                   )}
                 />
@@ -73,7 +72,7 @@ return (
                     <Title level={4}>{employee.name}</Title>
                     <List
                       size="small"
-                      dataSource={employee.assignedJobs}
+                      dataSource={employee.assignedJob}
                       renderItem={(job) => <List.Item>{job}</List.Item>}
                     />
                   </List.Item>

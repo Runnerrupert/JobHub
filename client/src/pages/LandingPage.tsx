@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
 
+import Logo from '../assets/images/logo.png';
+
 const LandingPage = () => {
 
     const navigate = useNavigate();
@@ -16,7 +18,8 @@ const LandingPage = () => {
 
     return (
         <div>
-            <h1>This is the Landing Page</h1>
+            <h1>Jobhub</h1>
+            <img src={Logo}></img>
             {/* // Add Title and Buttons to login, or create an account */}
             <section>
                 <button type="button"><Link to='/login'>Login</Link></button>
