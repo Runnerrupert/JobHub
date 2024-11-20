@@ -37,32 +37,28 @@ export const DELETE_CUSTOMER = gql`
 
 // Add job
 export const ADD_JOB = gql`
-  mutation AddJob($title: String!, $description: String!, $status: String!, $dueDate: String!, $customerId: ID!) {
-    addJob(title: $title, description: $description, status: $status, dueDate: $dueDate, customerId: $customerId) {
+  mutation AddJob($input: AddJobInput!) {
+    addJob(input: $input) {
       id
       title
       description
       status
       dueDate
       customerId
-      createdAt
-      updatedAt
     }
   }
 `;
 
 // Update job
 export const UPDATE_JOB = gql`
-  mutation UpdateJob($id: ID!, $title: String, $description: String, $status: String, $dueDate: String, $customerId: ID) {
-    updateJob(id: $id, title: $title, description: $description, status: $status, dueDate: $dueDate, customerId: $customerId) {
+  mutation UpdateJob($id: ID!, $input: UpdateJobInput!) {
+    updateJob(id: $id, input: $input) {
       id
       title
       description
       status
       dueDate
       customerId
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -70,7 +66,9 @@ export const UPDATE_JOB = gql`
 // Delete job
 export const DELETE_JOB = gql`
   mutation DeleteJob($id: ID!) {
-    deleteJob(id: $id)
+    deleteJob(id: $id) {
+      id
+    }
   }
 `;
 

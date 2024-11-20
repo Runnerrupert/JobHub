@@ -2,7 +2,7 @@ import models from '../models/index.js'
 import { signToken, AuthenticationError } from '../utils/auth.js'
 import bcrypt from 'bcrypt';
 
-const { Manager, Customer } = models;
+const { Manager, Customer, Job } = models;
 
 interface Manager {
   _id: string;
@@ -26,12 +26,23 @@ interface AddCustomerInput {
   address: string;
 }
 
+interface AddJobInput {
+  title: string;
+  description: string;
+  status: string;
+  dueDate: string;
+}
+
 type CustomerType = typeof Customer.schema.obj;
+type JobType = typeof Job.schema.obj;
 
 const resolvers = {
   Query: {
     customers: async () => {
       return await Customer.find();
+    },
+    jobs: async () => {
+      return await Job.find();
     }
   },
   Mutation: {
@@ -113,7 +124,38 @@ const resolvers = {
         console.error(error);
         throw new Error("An error occured when deleting customer");
       }
-    }
+    },
+    addJob: async (_parent: any, { input } : { input: AddJobInput }) => {
+      const newJob = new Job(input);
+      await newJob.save();
+      return newJob;
+    },
+
+    updateJob: async (_parent: any, { id, input }: { id: string, input: Partial<JobType>}) => {
+      const updatedJob = await Job.findByIdAndUpdate(
+        id,
+        { ...input, updatedAt: new Date().toISOString},
+        { new: true}
+      );
+      if (!updatedJob) {
+        throw new Error("No Job found with that ID");
+      };
+
+      return updatedJob;
+    },
+    deleteJob: async(_parent: any, { id }: { id: string; }) => {
+      try {
+        const deletedJob = await Job.findByIdAndDelete(id);
+
+        if (!deletedJob) {
+          throw new Error("No Job found with that ID");
+        }
+        return deletedJob;
+      } catch (error) {
+        console.error(error);
+        throw new Error("An error occured when deleting job");
+      }
+    },
   },
 };
 

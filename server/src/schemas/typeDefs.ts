@@ -36,6 +36,22 @@ const typeDefs =`
         updatedAt: String
     }
 
+    input AddJobInput {
+        title: String!
+        description: String!
+        status: String!
+        dueDate: String
+        customerId: ID!    
+    }
+
+    input UpdateJobInput {
+        title: String
+        description: String
+        status: String
+        dueDate: String
+        customerId: ID
+    }
+
     type Employee {
         id: ID!
         name: String!
@@ -87,16 +103,12 @@ const typeDefs =`
     type Mutation {
 
         addCustomer(input: AddCustomerInput!): Customer!
-
         updateCustomer(id: ID!, input: UpdateCustomerInput): Customer!
-
         deleteCustomer(id: ID!): Customer
 
-        addJob(title: String!, description: String!, status: String!, dueDate: String!, customerId: ID!): Job
-
-        updateJob(id: ID!, title: String, description: String, status: String, dueDate: String, customerId: ID): Job
-
-        deleteJob(id: ID!): Boolean
+        addJob(input: AddJobInput!): Job
+        updateJob(id: ID!, input: UpdateJobInput!): Job
+        deleteJob(id: ID!): Job
 
         addEmployee(name: String!, phoneNumber: String!, jobTitle: String!, hireDate: String!): Employee
 
