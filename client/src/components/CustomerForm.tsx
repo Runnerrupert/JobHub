@@ -1,15 +1,73 @@
 import React, { useState } from 'react';
 import {useMutation} from "@apollo/client";
 import {ADD_CUSTOMER} from "../graphql/mutations";
+import {GET_CUSTOMERS} from "../graphql/queries";
+
+interface Customer {
+    id: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    address: string;
+    createdAt?: string;
+    updatedAt?: string;
+    jobs?: Job[];
+}
+
+interface Job {
+    id: string;
+    title: string;
+    status: string;
+}
 
 const CustomerForm: React.FC = () => {
 const [formState, setFormState] = useState({
     name: '',
     email: '',
-    phone: '',
+    phonenumber: '',
     address: ''
 });
-  const [addCustomer, { loading, error }] = useMutation(ADD_CUSTOMER);
+
+const [isCustomerAdded, setIsCustomerAdded] = useState(false);
+const [addCustomer, { loading, error }] = useMutation(ADD_CUSTOMER, {
+  refetchQueries: [{ query: GET_CUSTOMERS }],
+  onCompleted: () => {
+      setFormState({
+          name: '',
+          email: '',
+          phonenumber: '',
+          address: ''
+      });
+      setIsCustomerAdded(true);
+  },
+  update: (cache, { data: { addCustomer } }) => {
+    try {
+      const customerData = cache.readQuery<{ customers: Customer[] }>({
+        query: GET_CUSTOMERS,
+    });
+
+    console.log(`Current customers in cache:`, customerData?.customers);
+
+    if (customerData && customerData.customers) {
+        cache.writeQuery({
+            query: GET_CUSTOMERS,
+            data: {
+                customers: [...customerData.customers, addCustomer],
+            },
+        });
+    } else {
+      cache.writeQuery({
+        query: GET_CUSTOMERS,
+        data: {
+            customers: [addCustomer],
+        },
+    });
+    }
+  } catch (error) {
+    console.error('Error writing to cache:', error);
+  }
+  }
+});
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -20,57 +78,62 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addCustomer({ variables: { ...formState } });
+    setIsCustomerAdded(false);
+    console.log('Form submitted');
+    addCustomer({ variables: { ...formState } }).catch((error) => {
+        console.error('Error adding customer:', error);
+    });
 };
 
-if (loading) return <p>Loading...</p>;
-if (error) return <p>Error :(</p>;
-
-  return (
-    <>
-    {loading && <p>Loading...</p>}
-    {error && <p>Error</p>}
-
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="customerName">Customer Name:</label>
-      <input
-        type="text"
-        id="customerName"
-        name = "name"
-        value={formState.name}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="customerEmail">E-mail:</label>
-      <input
-      type="email"
-      id="customerEmail"
-      name = "email"
-      value={formState.email}
-      onChange={handleChange}
-      />
-
-      <label htmlFor="customerPhone">Phone Number:</label>
-      <input
-      type="tel"
-      id="customerPhone"
-      name = "phone"
-      value={formState.phone}
-      onChange={handleChange}
-      />
-
-      <label htmlFor="customerAddress">Address:</label>
-      <input
+return (
+  <div>
+  <form onSubmit={handleSubmit}>
+    <label htmlFor="customerName">Customer Name:</label>
+    <input
       type="text"
-      id="customerAddress"
-      name = "address"
-      value={formState.address}
+      id="customerName"
+      name = "name"
+      value={formState.name}
       onChange={handleChange}
-      />
+      required
+    />
 
-    <button type="submit">Add New Customer</button>
-    </form>
-    </>
+    <label htmlFor="customerEmail">E-mail:</label>
+    <input
+    type="email"
+    id="customerEmail"
+    name = "email"
+    value={formState.email}
+    onChange={handleChange}
+    required
+    />
+
+    <label htmlFor="customerPhone">Phone Number:</label>
+    <input
+    type="tel"
+    id="customerPhone"
+    name = "phonenumber"
+    value={formState.phonenumber}
+    onChange={handleChange}
+    required
+    />
+
+    <label htmlFor="customerAddress">Address:</label>
+    <input
+    type="text"
+    id="customerAddress"
+    name = "address"
+    value={formState.address}
+    onChange={handleChange}
+    required
+    />
+
+    <button type="submit" disabled={loading}>{loading ? 'Adding...' : 'Add New Customer'}</button>
+  </form>
+
+  {isCustomerAdded && <p>Customer added successfully!</p>}
+  {error && <p>Error :( Please try again</p>}
+  </div>
   );
 };
 
