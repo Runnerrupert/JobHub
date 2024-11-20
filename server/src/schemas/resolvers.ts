@@ -26,6 +26,8 @@ interface AddCustomerInput {
   address: string;
 }
 
+type CustomerType = typeof Customer.schema.obj;
+
 const resolvers = {
   Query: {
     customers: async () => {
@@ -86,6 +88,19 @@ const resolvers = {
 
       return newCustomer;
     },
+    updateCustomer: async (_parent: any, { id, input }: { id: string; input: Partial<CustomerType> }) => {
+      const updatedCustomer = await Customer.findByIdAndUpdate(
+        id,
+        { ...input, updatedAt: new Date().toISOString() },
+        { new: true }
+      );
+
+      if (!updatedCustomer) {
+        throw new Error("No Customer found with that ID");
+      }
+
+      return updatedCustomer;
+    }
   },
 };
 

@@ -1,33 +1,19 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CUSTOMERS } from '../graphql/queries';
+import { Customer, Job } from '../interfaces/Customer';
 
-interface Customer
-{
-    id: string;
-    name: string;
-    email: string;
-    phoneNumber: string;
-    address: string;
-    createdAt?: string;
-    updatedAt?: string;
-    jobs?: Job[];
+interface CustomerListProps {
+    editCustomer: (customer: Customer) => void;
 }
 
-interface Job
-{
-    id: string;
-    title: string;
-    status: string;
-}
-
-const CustomerList: React.FC = () => {
+const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
     const { loading, error, data } = useQuery(GET_CUSTOMERS)
 
     if (loading) return <p>Loading...</p>;
     if (error)  {
         console.error(error.message);
-        return <p>Error :(</p>;
+        return <p>Error</p>;
     }
 
     console.log("Current customers from GET_CUSTOMERS query: ", data?.customers);
@@ -41,16 +27,16 @@ const CustomerList: React.FC = () => {
             return <p>No jobs assigned</p>;
         }
 
-    return (
-        <ul>
-            {jobs.map((job: Job) => (
-                <li key={job.id}>
-                    <p>{job.title}</p>
-                    <p>{job.status}</p>
-                </li>
-            ))}
-        </ul>
-    )
+        return (
+            <ul>
+                {jobs.map((job: Job) => (
+                    <li key={job.id}>
+                        <p>{job.title}</p>
+                        <p>{job.status}</p>
+                    </li>
+                ))}
+            </ul>
+        )
     }
 
     return (
@@ -64,6 +50,7 @@ const CustomerList: React.FC = () => {
                 <p>{customer.address}</p>
                 <h3>Jobs</h3>
                 {customer.jobs ? renderJobs(customer.jobs) : <p>No jobs assigned</p>}
+                <button onClick={() => editCustomer(customer)}>Edit</button>
             </div>
             ))}
         </div>

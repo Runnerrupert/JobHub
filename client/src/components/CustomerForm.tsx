@@ -1,26 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useMutation} from "@apollo/client";
-import {ADD_CUSTOMER} from "../graphql/mutations";
+import {ADD_CUSTOMER, UPDATE_CUSTOMER} from "../graphql/mutations";
 import {GET_CUSTOMERS} from "../graphql/queries";
+import { Customer } from "../interfaces/Customer";
 
-interface Customer {
-    id: string;
-    name: string;
-    email: string;
-    phoneNumber: string;
-    address: string;
-    createdAt?: string;
-    updatedAt?: string;
-    jobs?: Job[];
+interface CustomerFormProps {
+  customer: Customer | null;
 }
 
-interface Job {
-    id: string;
-    title: string;
-    status: string;
-}
-
-const CustomerForm: React.FC = () => {
+const CustomerForm: React.FC<CustomerFormProps> = ({ customer }) => {
 const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -29,45 +17,46 @@ const [formState, setFormState] = useState({
 });
 
 const [isCustomerAdded, setIsCustomerAdded] = useState(false);
+
 const [addCustomer, { loading, error }] = useMutation(ADD_CUSTOMER, {
   refetchQueries: [{ query: GET_CUSTOMERS }],
   onCompleted: () => {
-      setFormState({
-          name: '',
-          email: '',
-          phoneNumber: '',
-          address: ''
-      });
-      setIsCustomerAdded(true);
-  },
-  update: (cache, { data: { addCustomer } }) => {
-    try {
-      const customerData = cache.readQuery<{ customers: Customer[] }>({
-        query: GET_CUSTOMERS,
+    setFormState({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        address: ''
     });
-
-    console.log(`Current customers in cache:`, customerData?.customers);
+    setIsCustomerAdded(true);
+},
+  update: (cache, { data: { addCustomer } }) => {
+    const customerData = cache.readQuery<{ customers: Customer[] }>({
+      query: GET_CUSTOMERS,
+    });
 
     if (customerData && customerData.customers) {
-        cache.writeQuery({
-            query: GET_CUSTOMERS,
-            data: {
-                customers: [...customerData.customers, addCustomer],
-            },
-        });
-    } else {
       cache.writeQuery({
         query: GET_CUSTOMERS,
-        data: {
-            customers: [addCustomer],
-        },
-    });
+        data: { customers: [...customerData.customers, addCustomer] },
+      });
     }
-  } catch (error) {
-    console.error('Error writing to cache:', error);
-  }
   }
 });
+
+const [updateCustomer, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_CUSTOMER, {
+  refetchQueries: [{ query: GET_CUSTOMERS }]
+}) 
+
+useEffect(() => {
+  if (customer) {
+    setFormState({
+      name: customer.name,
+      email: customer.email,
+      phoneNumber: customer.phoneNumber,
+      address: customer.address
+    })
+  }
+}, [customer]);
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -77,13 +66,25 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 };
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsCustomerAdded(false);
-    console.log('Form submitted');
-    addCustomer({ variables: { input: formState } }).catch((error) => {
-        console.error('Error adding customer:', error);
+  e.preventDefault();
+  if (customer) {
+    updateCustomer({ variables: { input: formState, id: customer.id } }).catch((err) => {
+      console.error('Error updating customer:', err);
     });
+  } else {
+    addCustomer({ variables: { input: formState } }).catch((error) => {
+      console.error('Error adding customer:', error);
+    });
+  };
+  setFormState({
+    name: '',
+    email: '',
+    phoneNumber: '',
+    address: ''
+  });
 };
+    
+    
 
 return (
   <div>
@@ -128,11 +129,12 @@ return (
     required
     />
 
-    <button type="submit" disabled={loading}>{loading ? 'Adding...' : 'Add New Customer'}</button>
+    <button type="submit" disabled={loading || updateLoading}>{loading || updateLoading ? 'Submitting...' : customer ? 'Update Customer' : 'Add New Customer'}</button>
   </form>
 
-  {isCustomerAdded && <p>Customer added successfully!</p>}
-  {error && <p>Error :( Please try again</p>}
+    {isCustomerAdded && <p>Customer added successfully!</p>}
+    {error && <p>Error, Please try again</p>}
+    {updateError && <p>Error updating customer, please try again</p>}
   </div>
   );
 };
