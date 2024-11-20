@@ -1,6 +1,7 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_CUSTOMERS } from '../graphql/queries';
+import { DELETE_CUSTOMER } from '../graphql/mutations';
 import { Customer, Job } from '../interfaces/Customer';
 
 interface CustomerListProps {
@@ -9,6 +10,13 @@ interface CustomerListProps {
 
 const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
     const { loading, error, data } = useQuery(GET_CUSTOMERS)
+
+    const [deleteCustomer] = useMutation(DELETE_CUSTOMER, {
+        refetchQueries: [{ query: GET_CUSTOMERS }],
+        onCompleted: () => {
+            console.log('Customer deleted');
+        }
+    })
 
     if (loading) return <p>Loading...</p>;
     if (error)  {
@@ -20,6 +28,12 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
 
     if (!data || !data.customers || data.customers.length === 0) {
         return <p>No customers found</p>;
+    }
+
+    const handleDeleteCustomer = (id: string) => {
+        deleteCustomer({ variables: { id }}).catch((error) => {
+            console.error("Error deleting customer: ", error);
+        })
     }
 
     const renderJobs = (jobs: Job[]) => {
@@ -51,6 +65,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
                 <h3>Jobs</h3>
                 {customer.jobs ? renderJobs(customer.jobs) : <p>No jobs assigned</p>}
                 <button onClick={() => editCustomer(customer)}>Edit</button>
+                <button onClick={() => handleDeleteCustomer(customer.id)}>Delete</button>
             </div>
             ))}
         </div>

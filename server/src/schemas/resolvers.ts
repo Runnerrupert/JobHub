@@ -100,6 +100,19 @@ const resolvers = {
       }
 
       return updatedCustomer;
+    },
+    deleteCustomer: async(_parent: any, { id }: { id: string; }) => {
+      try {
+        const deletedCustomer = await Customer.findByIdAndDelete(id);
+
+        if (!deletedCustomer) {
+          throw new Error("No Customer found with that ID");
+        }
+        return deletedCustomer;
+      } catch (error) {
+        console.error(error);
+        throw new Error("An error occured when deleting customer");
+      }
     }
   },
 };

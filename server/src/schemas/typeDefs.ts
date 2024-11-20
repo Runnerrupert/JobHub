@@ -90,7 +90,7 @@ const typeDefs =`
 
         updateCustomer(id: ID!, input: UpdateCustomerInput): Customer!
 
-        deleteCustomer(id: ID!): Boolean
+        deleteCustomer(id: ID!): Customer
 
         addJob(title: String!, description: String!, status: String!, dueDate: String!, customerId: ID!): Job
 

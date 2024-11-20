@@ -29,7 +29,9 @@ export const UPDATE_CUSTOMER = gql`
 // Delete customer
 export const DELETE_CUSTOMER = gql`
   mutation DeleteCustomer($id: ID!) {
-    deleteCustomer(id: $id)
+    deleteCustomer(id: $id) {
+      id
+    }
   }
 `;
 
