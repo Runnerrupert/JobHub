@@ -1,11 +1,8 @@
 // import { Link } from 'react-router-dom';
 // import { useQuery } from '@apollo/client';
-import React from 'react';
+import { Layout, Menu, Button, Row, Col, Card, Typography, List } from 'antd';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../utils/queries';
-import Auth from '../utils/auth';
-import './Home.css';
+
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -61,7 +58,7 @@ return (
                   dataSource={customer.jobs}
                   renderItem={(job) => (
                     <List.Item>
-                      {job.title} - {job.qty}
+                      {job.title} 
                     </List.Item>
                   )}
                 />
@@ -80,7 +77,7 @@ return (
                     <Title level={4}>{employee.name}</Title>
                     <List
                       size="small"
-                      dataSource={employee.assignedJobs}
+                      dataSource={employee.assignedJob}
                       renderItem={(job) => <List.Item>{job}</List.Item>}
                     />
                   </List.Item>
