@@ -2,7 +2,7 @@ import models from '../models/index.js'
 import { signToken, AuthenticationError } from '../utils/auth.js'
 import bcrypt from 'bcrypt';
 
-const { Manager, Customer, Job } = models;
+const { Manager, Customer, Job, Assignment, Employee } = models;
 
 interface Manager {
   _id: string;
@@ -19,31 +19,48 @@ interface AddManagerArgs {
   }
 }
 
-interface AddCustomerInput {
+interface CustomerInput {
   name: string;
   email: string;
   phoneNumber: string;
   address: string;
 }
 
-interface AddJobInput {
+interface JobInput {
   title: string;
   description: string;
   status: string;
-  dueDate: string;
+  dueDate?: string;
+  customerId: string;
+}
+
+interface AssignmentInput {
+  
+}
+
+interface EmployeeInput {
+
 }
 
 type CustomerType = typeof Customer.schema.obj;
 type JobType = typeof Job.schema.obj;
+type AssignmentType = typeof Assignment.schema.obj;
+type EmployeeType = typeof Employee.schema.obj;
 
 const resolvers = {
   Query: {
     customers: async () => {
-      return await Customer.find();
+      return await Customer.find().populate('jobs');
     },
     jobs: async () => {
-      return await Job.find();
-    }
+      return await Job.find().populate('customer assignment');;
+    },
+    assignments: async () => {
+      return await Assignment.find().populate('job employees');
+    },
+    employees: async () => {
+      return await Employee.find();
+    },
   },
   Mutation: {
     createAccount: async (_parent: unknown, { input }: AddManagerArgs): Promise<{ token: string; manager: Manager }> => {
@@ -87,12 +104,10 @@ const resolvers = {
       const token = signToken(manager.name, manager.email, manager._id);
       return { token, manager };
     },
-    addCustomer: async (_parent: any, { input }: { input: AddCustomerInput }) => {
+    addCustomer: async (_parent: any, { input }: { input: CustomerInput }) => {
 
       const newCustomer = new Customer({
         ...input,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
       })
 
       await newCustomer.save();
@@ -125,7 +140,14 @@ const resolvers = {
         throw new Error("An error occured when deleting customer");
       }
     },
-    addJob: async (_parent: any, { input } : { input: AddJobInput }) => {
+    addJob: async (_parent: any, { input } : { input: JobInput }) => {
+      const { customerId } = input
+      const customer = await Customer.findById(customerId)
+
+      if (!customer) {
+        throw new Error("Customer not found");
+      }
+
       const newJob = new Job(input);
       await newJob.save();
       return newJob;
@@ -154,6 +176,68 @@ const resolvers = {
       } catch (error) {
         console.error(error);
         throw new Error("An error occured when deleting job");
+      }
+    },
+    addAssignment: async (_parent: any, { input } : { input: AssignmentInput }) => {
+      const newAssignment = new Assignment(input);
+      await newAssignment.save();
+      return newAssignment;
+    },
+
+    updateAssignment: async (_parent: any, { id, input }: { id: string, input: Partial<AssignmentType>}) => {
+      const updatedAssignment = await Assignment.findByIdAndUpdate(
+        id,
+        { ...input, updatedAt: new Date().toISOString},
+        { new: true}
+      );
+      if (!updatedAssignment) {
+        throw new Error("No Assignment found with that ID");
+      };
+
+      return updatedAssignment;
+    },
+    deleteAssignment: async(_parent: any, { id }: { id: string; }) => {
+      try {
+        const deletedAssignment = await Assignment.findByIdAndDelete(id);
+
+        if (!deletedAssignment) {
+          throw new Error("No Assignment found with that ID");
+        }
+        return deletedAssignment;
+      } catch (error) {
+        console.error(error);
+        throw new Error("An error occured when deleting Assignment");
+      }
+    },
+    addEmployee: async (_parent: any, { input } : { input: EmployeeInput }) => {
+      const newEmployee = new Employee(input);
+      await newEmployee.save();
+      return newEmployee;
+    },
+
+    updateEmployee: async (_parent: any, { id, input }: { id: string, input: Partial<EmployeeType>}) => {
+      const updatedEmployee = await Employee.findByIdAndUpdate(
+        id,
+        { ...input, updatedAt: new Date().toISOString},
+        { new: true}
+      );
+      if (!updatedEmployee) {
+        throw new Error("No Employee found with that ID");
+      };
+
+      return updatedEmployee;
+    },
+    deleteEmployee: async(_parent: any, { id }: { id: string; }) => {
+      try {
+        const deletedEmployee = await Employee.findByIdAndDelete(id);
+
+        if (!deletedEmployee) {
+          throw new Error("No Employee found with that ID");
+        }
+        return deletedEmployee;
+      } catch (error) {
+        console.error(error);
+        throw new Error("An error occured when deleting Employee");
       }
     },
   },

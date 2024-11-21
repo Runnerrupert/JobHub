@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_JOBS } from '../graphql/queries';
 import { DELETE_JOB } from '../graphql/mutations';
-import { Job } from '../interfaces/Job';
+import { Job } from '../interfaces/Customer';
 
 interface JobListProps {
     editJob: (job: Job) => void;
@@ -36,30 +36,13 @@ const JobList: React.FC<JobListProps> = ({ editJob }) => {
         })
     }
 
-    // const renderJobs = (jobs: Job[]) => {
-    //     if (!jobs || jobs.length === 0) {
-    //         return <p>No jobs assigned</p>;
-    //     }
-
-    //     return (
-    //         <ul>
-    //             {jobs.map((job: Job) => (
-    //                 <li key={job.id}>
-    //                     <p>{job.title}</p>
-    //                     <p>{job.status}</p>
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //     )
-    // }
-
     return (
         <div>
             <h2>Job Info</h2>
             {data.jobs.map((job: Job) => (
             <div key={job.id}>
                 <h3>{job.title}</h3>
-                <p>{job.description}</p>
+                <p>Customer: {job.customer ? job.customer.name : 'No customer Assigned'}</p>
                 <button onClick={() => editJob(job)}>Edit</button>
                 <button onClick={() => handleDeleteJob(job.id)}>Delete</button>
             </div>

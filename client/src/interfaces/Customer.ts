@@ -1,7 +1,10 @@
 export interface Job {
     id: string;
     title: string;
-    status: string;
+    description: string;
+    status: 'pending' | 'in-progress' | 'completed'; 
+    dueDate: string; 
+    customer?: Customer;
 }
 
 export interface Customer {
@@ -10,7 +13,5 @@ export interface Customer {
     email: string;
     phoneNumber: string;
     address: string;
-    createdAt?: string;
-    updatedAt?: string;
     jobs?: Job[];
 }

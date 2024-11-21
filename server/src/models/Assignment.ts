@@ -1,27 +1,26 @@
 import { Schema, model, type Document } from 'mongoose';
 
 interface IAssignment extends Document {
+    title: string;
     jobId: Schema.Types.ObjectId;
-    employeeId: Schema.Types.ObjectId;
-    assignedAt?: Date;
+    employeeIds: Schema.Types.ObjectId[];
 }
 
 const assignmentSchema = new Schema<IAssignment>(
     {
+        title: {
+            type: String,
+            required: true
+        },
         jobId: {
             type: Schema.Types.ObjectId,
             ref: 'Job',
             required: true
         },
-        employeeId: {
+        employeeIds: [{
             type: Schema.Types.ObjectId,
-            ref: 'Employee',
-            required: true
-        },
-        assignedAt: {
-            type: Date,
-            default: Date.now
-        }
+            ref: 'Employee'
+        }],
     },
     {
         timestamps: true,

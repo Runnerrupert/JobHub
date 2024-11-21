@@ -6,8 +6,7 @@ interface IEmployee extends Document {
     phoneNumber: string;
     role: string;
     hireDate: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    assignments?: Schema.Types.ObjectId[];
 }
 
 const employeeSchema = new Schema<IEmployee>(
@@ -33,14 +32,10 @@ const employeeSchema = new Schema<IEmployee>(
             type: Date,
             required: true
         },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        },
-        updatedAt: {
-            type: Date,
-            default: Date.now
-        }
+        assignments: [{
+            type: Schema.Types.ObjectId, 
+            ref: 'Assignment'
+        }]
     },
     {
         timestamps: true,

@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import JobForm from '../components/JobForm';
 import JobList from '../components/JobList';
-import type { Job } from '../interfaces/Job';
+import type { Job } from '../interfaces/Customer';
 
 const Jobs: React.FC = () => {
 

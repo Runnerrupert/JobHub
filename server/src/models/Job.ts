@@ -6,8 +6,7 @@ interface IJob extends Document {
     status: 'unassigned' | 'in-progress' | 'completed';
     dueDate?: Date;
     customerId: Schema.Types.ObjectId;
-    createdAt?: Date;
-    updatedAt?: Date;
+    assignmentId?: Schema.Types.ObjectId;
 }
 
 const jobSchema = new Schema<IJob>(
@@ -33,13 +32,9 @@ const jobSchema = new Schema<IJob>(
             ref: 'Customer', 
             required: true 
         },
-        createdAt: { 
-            type: Date, 
-            default: Date.now 
-        },
-        updatedAt: { 
-            type: Date, 
-            default: Date.now 
+        assignmentId: { 
+            type: Schema.Types.ObjectId,
+            ref: 'Assignment'
         }
     },
     {

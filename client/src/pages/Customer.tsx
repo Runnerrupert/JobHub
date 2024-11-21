@@ -18,7 +18,7 @@ const Customer: React.FC = () => {
         <h1>This is the Customer Page</h1>
         {/* // Add forms to add, update, and delete customers */}
 
-        <CustomerForm customer={editingCustomer} />
+        <CustomerForm customer={editingCustomer} onEditComplete={() => setEditingCustomer(null)} />
 
         {/* // Add a table to display all customers */}
 

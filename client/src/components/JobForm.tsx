@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADD_JOB, UPDATE_JOB } from '../graphql/mutations';
 import { GET_JOBS } from '../graphql/queries';
 import { GET_CUSTOMERS } from '../graphql/queries';
-import { Job } from '../interfaces/Job';
+import { Job } from '../interfaces/Customer';
 import { Customer } from '../interfaces/Customer';
 
 interface JobFormProps {
@@ -35,18 +35,6 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
       });
       setIsJobAdded(true);
     },
-    update: (cache, { data: { addJob } }) => {
-      const jobData = cache.readQuery<{ jobs: Job[] }>({
-        query: GET_JOBS,
-      });
-
-      if (jobData && jobData.jobs) {
-        cache.writeQuery({
-          query: GET_JOBS,
-          data: { jobs: [...jobData.jobs, addJob] },
-        });
-      }
-    }
   });
 
   const [updateJob, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_JOB, {
@@ -60,7 +48,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         description: job.description,
         status: job.status,
         dueDate: job.dueDate,
-        customerId: job.customerId.toString()
+        customerId: job.customer?.id.toString() || ''
       });
     }
   }, [job]);
@@ -74,6 +62,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (job) {
       updateJob({ variables: { input: formState, id: job.id } }).catch((err) => {
         console.error('Error updating job:', err);

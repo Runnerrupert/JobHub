@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 // Add customer
 export const ADD_CUSTOMER = gql`
-  mutation AddCustomer($input: AddCustomerInput!) {
+  mutation AddCustomer($input: CustomerInput!) {
     addCustomer(input: $input) {
       id
       name
@@ -15,7 +15,7 @@ export const ADD_CUSTOMER = gql`
 
 // Update customer
 export const UPDATE_CUSTOMER = gql`
-  mutation UpdateCustomer($id: ID!, $input: UpdateCustomerInput!) {
+  mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
     updateCustomer(id: $id, input: $input) {
       id
       name
@@ -37,28 +37,34 @@ export const DELETE_CUSTOMER = gql`
 
 // Add job
 export const ADD_JOB = gql`
-  mutation AddJob($input: AddJobInput!) {
+  mutation AddJob($input: JobInput!) {
     addJob(input: $input) {
       id
       title
       description
       status
       dueDate
-      customerId
+      customer {
+        id
+        name
+      }
     }
   }
 `;
 
 // Update job
 export const UPDATE_JOB = gql`
-  mutation UpdateJob($id: ID!, $input: UpdateJobInput!) {
+  mutation UpdateJob($id: ID!, $input: JobInput!) {
     updateJob(id: $id, input: $input) {
       id
       title
       description
       status
       dueDate
-      customerId
+      customer {
+        id
+        name
+      }
     }
   }
 `;
@@ -66,7 +72,50 @@ export const UPDATE_JOB = gql`
 // Delete job
 export const DELETE_JOB = gql`
   mutation DeleteJob($id: ID!) {
-    deleteJob(id: $id) {
+    deleteJob(id: $id){
+      id
+    }
+  }
+`;
+
+// Add assignment
+export const ADD_ASSIGNMENT = gql`
+  mutation AddAssignment($input: AssignmentInput!) {
+    addAssignment(input: $input) {
+      id
+      job {
+        id
+        title
+      }
+      employee {
+        id
+        name
+      }
+    }
+  }
+`;
+
+// Update assignment
+export const UPDATE_ASSIGNMENT = gql`
+  mutation UpdateAssignment($id: ID!, $input: AssignmentInput!) {
+    updateAssignment(id: $id, input: $input) {
+      id
+      job {
+        id
+        title
+      }
+      employee {
+        id
+        name
+      }
+    }
+  }
+`
+
+// Remove assignment
+export const DELETE_ASSIGNMENT = gql`
+  mutation DeleteAssignment($id: ID!) {
+    deleteAssignment(id: $id){
       id
     }
   }
@@ -74,30 +123,26 @@ export const DELETE_JOB = gql`
 
 // Add employee
 export const ADD_EMPLOYEE = gql`
-  mutation AddEmployee($name: String!, $phoneNumber: String!, $jobTitle: String!, $hireDate: String!) {
-    addEmployee(name: $name, phoneNumber: $phoneNumber, jobTitle: $jobTitle, hireDate: $hireDate) {
+  mutation AddEmployee($input: EmployeeInput!) {
+    addEmployee(input: $input) {
       id
       name
       phoneNumber
-      jobTitle
+      role
       hireDate
-      createdAt
-      updatedAt
     }
   }
 `;
 
 // Update employee
 export const UPDATE_EMPLOYEE = gql`
-  mutation UpdateEmployee($id: ID!, $name: String, $phoneNumber: String, $jobTitle: String, $hireDate: String) {
-    updateEmployee(id: $id, name: $name, phoneNumber: $phoneNumber, jobTitle: $jobTitle, hireDate: $hireDate) {
+  mutation UpdateEmployee($input: EmployeeInput!) {
+    updateEmployee(id: $id, input: $input) {
       id
       name
       phoneNumber
-      jobTitle
+      role
       hireDate
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -105,26 +150,9 @@ export const UPDATE_EMPLOYEE = gql`
 // Delete employee
 export const DELETE_EMPLOYEE = gql`
   mutation DeleteEmployee($id: ID!) {
-    deleteEmployee(id: $id)
-  }
-`;
-
-// Add assignment
-export const ADD_ASSIGNMENT = gql`
-  mutation AddAssignment($jobId: ID!, $employeeId: ID!, $createdAt: String!) {
-    addAssignment(jobId: $jobId, employeeId: $employeeId, createdAt: $createdAt) {
+    deleteEmployee(id: $id){
       id
-      jobId
-      employeeId
-      createdAt
     }
-  }
-`;
-
-// Remove assignment
-export const REMOVE_ASSIGNMENT = gql`
-  mutation RemoveAssignment($id: ID!) {
-    removeAssignment(id: $id)
   }
 `;
 

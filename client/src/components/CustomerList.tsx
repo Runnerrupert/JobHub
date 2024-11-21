@@ -24,16 +24,16 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
         return <p>Error</p>;
     }
 
-    console.log("Current customers from GET_CUSTOMERS query: ", data?.customers);
-
     if (!data || !data.customers || data.customers.length === 0) {
         return <p>No customers found</p>;
     }
 
-    const handleDeleteCustomer = (id: string) => {
-        deleteCustomer({ variables: { id }}).catch((error) => {
-            console.error("Error deleting customer: ", error);
-        })
+    const handleDeleteCustomer = async (id: string) => {
+        try {
+            await deleteCustomer({ variables: { id } })
+        } catch {
+            console.error("Error deleting customer:", error);
+        }
     }
 
     const renderJobs = (jobs: Job[]) => {
