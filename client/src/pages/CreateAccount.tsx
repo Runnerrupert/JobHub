@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 
 import Auth from '../utils/auth';
+import '../styles/CreateAccount.css';
 
 const CreateAccount = () => {
     const [email, setEmail] = useState("");
@@ -26,46 +27,50 @@ const CreateAccount = () => {
         }
     };
     
-  return (
-    <div>
-      <button ><Link to='/'>Back</Link></button>
-        <div>
-            <form onSubmit={handleSubmit}>
-              <h2>Create Account</h2>
-              <div>
-                <label>Email</label>
-                <input 
-                    type="email"
-                    value = {email}
-                    onChange = {(event) => setEmail(event.target.value)}
-                    required
-                />
-              </div>
-              <div>
-                <label>Username</label>
-                <input
-                    type="text"
-                    value = {name}
-                    onChange = {(event) => setName(event.target.value)}
-                    required
-                />
-              </div>
-              <div>
-                <label>Password</label>
-                <input
-                    type = "password"
-                    value = {password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    required
-                    />
-              </div>
-              <button type='submit' disabled = {loading}>{loading ? "Creating Account..." : "Submit"}</button>
-              {error && <p>Error: {error.message}</p>}
-            </form>
-        </div>
-    </div>
+    return (
+      <div className="create-account-container">
+          <div className="create-account-card">
+              <button className="back-button"><Link to="/">Back</Link></button>
+              <form onSubmit={handleSubmit}>
+                  <h2 className="create-account-title">Create Account</h2>
+                  <div>
+                      <label>Email:</label>
+                      <input 
+                          type="email"
+                          value={email}
+                          onChange={(event) => setEmail(event.target.value)}
+                          required
+                      />
+                  </div>
+                  <div>
+                      <label>Username:</label>
+                      <input
+                          type="text"
+                          value={name}
+                          onChange={(event) => setName(event.target.value)}
+                          required
+                      />
+                  </div>
+                  <div>
+                      <label>Password:</label>
+                      <input
+                          type="password"
+                          value={password}
+                          onChange={(event) => setPassword(event.target.value)}
+                          required
+                      />
+                  </div>
+                  <button 
+                      type="submit" 
+                      disabled={loading}
+                      className="submit-button">
+                      {loading ? "Creating Account..." : "Submit"}
+                  </button>
+                  {error && <p>Error: {error.message}</p>}
+              </form>
+          </div>
+      </div>
   );
 };
-
 
 export default CreateAccount;
