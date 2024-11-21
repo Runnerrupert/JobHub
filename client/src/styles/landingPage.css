@@ -17,11 +17,11 @@ body {
 }
 
 .landing-card {
-    background-color:  #ced2d9;
+    background-color: #ced2d9;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
-    width: 350px; 
+    width: 350px;
     height: 450px;
     text-align: center;
 }
@@ -36,14 +36,14 @@ body {
 
 .landing-buttons {
     display: flex;
-    flex-direction: column; 
-    gap: 50px; 
+    flex-direction: column;
+    gap: 50px;
     margin-top: 10px;
 }
 
 
 .landing-button {
-    background-color: #007bff;
+    background-color: #449ccf;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -52,10 +52,10 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     text-decoration: none;
-    width: 100%; 
+    width: 100%;
 }
 
 .landing-button:hover {
-    background-color: #154c63;
+    background-color: #3495c9;
 
 }
