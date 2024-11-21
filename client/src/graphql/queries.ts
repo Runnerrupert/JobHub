@@ -57,13 +57,6 @@ export const GET_JOBS = gql`
         name
       }
     }
-    assignment {
-      id
-      employee {
-        id
-        name
-      }
-    }
   }
 `;
 

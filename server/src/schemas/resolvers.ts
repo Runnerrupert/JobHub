@@ -31,7 +31,7 @@ interface JobInput {
   description: string;
   status: string;
   dueDate?: string;
-  customerId: string;
+  customer: string;
 }
 
 interface AssignmentInput {
@@ -53,7 +53,7 @@ const resolvers = {
       return await Customer.find().populate('jobs');
     },
     jobs: async () => {
-      return await Job.find().populate('customer assignment');;
+      return await Job.find().populate('customer');
     },
     assignments: async () => {
       return await Assignment.find().populate('job employees');
@@ -140,17 +140,29 @@ const resolvers = {
         throw new Error("An error occured when deleting customer");
       }
     },
-    addJob: async (_parent: any, { input } : { input: JobInput }) => {
-      const { customerId } = input
-      const customer = await Customer.findById(customerId)
-
-      if (!customer) {
+    addJob: async (_parent: any, { input }: { input: JobInput }) => {
+      const { customer, ...jobDetails } = input;
+    
+      const existingCustomer = await Customer.findById(customer);
+    
+      if (!existingCustomer) {
         throw new Error("Customer not found");
       }
-
-      const newJob = new Job(input);
+    
+      const newJob = new Job({
+        ...jobDetails, 
+        customer
+      });
+    
       await newJob.save();
-      return newJob;
+
+      await Customer.findByIdAndUpdate(customer, {
+        $push: { jobs: newJob._id }
+      })
+    
+      const populatedJob = await newJob.populate('customer')
+    
+      return populatedJob;
     },
 
     updateJob: async (_parent: any, { id, input }: { id: string, input: Partial<JobType>}) => {

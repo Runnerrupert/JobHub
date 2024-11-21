@@ -22,7 +22,7 @@ const typeDefs =`
         description: String!
         status: String!
         dueDate: String!
-        customer: Customer!
+        customer: Customer
         assignment: Assignment
     }
 
@@ -31,16 +31,18 @@ const typeDefs =`
         description: String!
         status: String!
         dueDate: String
-        customerId: ID!    
+        customer: ID!    
     }
 
     type Assignment {
         id: ID!
-        job: Job!
-        employee: [Employee]
+        title: String!
+        jobId: Job!
+        employeeIds: [Employee!]
     }
 
     input AssignmentInput {
+        title: String!
         jobId: ID!
         employeeIds: [ID!]!
     }
@@ -88,7 +90,7 @@ const typeDefs =`
         job(id: ID!): Job
 
         assignments: [Assignment]
-        assignment(id: ID!): Assignment 
+        assignment(id: ID): Assignment 
          
         employees: [Employee]
         employee(id: ID!): Employee

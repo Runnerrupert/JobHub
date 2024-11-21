@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_JOBS } from '../graphql/queries';
+import { GET_CUSTOMERS, GET_JOBS } from '../graphql/queries';
 import { DELETE_JOB } from '../graphql/mutations';
 import { Job } from '../interfaces/Customer';
 
@@ -12,7 +12,7 @@ const JobList: React.FC<JobListProps> = ({ editJob }) => {
     const { loading, error, data } = useQuery(GET_JOBS)
 
     const [deleteJob] = useMutation(DELETE_JOB, {
-        refetchQueries: [{ query: GET_JOBS }],
+        refetchQueries: [{ query: GET_JOBS }, { query: GET_CUSTOMERS }],
         onCompleted: () => {
             console.log('Job deleted');
         }
@@ -20,11 +20,11 @@ const JobList: React.FC<JobListProps> = ({ editJob }) => {
 
     if (loading) return <p>Loading...</p>;
     if (error)  {
-        console.error(error.message);
+        console.error('Error details: ', JSON.stringify(error, null, 2));
         return <p>Error</p>;
     }
 
-    console.log("Current jobs from GET_JOBS query: ", data?.jobs);
+    console.log(data);
 
     if (!data || !data.jobs || data.jobs.length === 0) {
         return <p>No jobs found</p>;

@@ -16,7 +16,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
     description: '',
     status: 'pending', 
     dueDate: '',
-    customerId: ''
+    customer: ''
   });
 
   const [isJobAdded, setIsJobAdded] = useState(false);
@@ -24,14 +24,14 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
   const { data: customersData, loading: customersLoading, error: customersError } = useQuery(GET_CUSTOMERS);
 
   const [addJob, { loading, error }] = useMutation(ADD_JOB, {
-    refetchQueries: [{ query: GET_JOBS }],
+    refetchQueries: [{ query: GET_JOBS }, { query: GET_CUSTOMERS }],
     onCompleted: () => {
       setFormState({
         title: '',
         description: '',
         status: 'pending',
         dueDate: '',
-        customerId: ''
+        customer: ''
       });
       setIsJobAdded(true);
     },
@@ -48,7 +48,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         description: job.description,
         status: job.status,
         dueDate: job.dueDate,
-        customerId: job.customer?.id.toString() || ''
+        customer: job.customer?.id.toString() || ''
       });
     }
   }, [job]);
@@ -68,7 +68,12 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         console.error('Error updating job:', err);
       });
     } else {
-      addJob({ variables: { input: formState } }).catch((error) => {
+      addJob({ variables: { input: { 
+        title: formState.title, 
+        description: formState.description, 
+        status: formState.status, 
+        dueDate: formState.dueDate, 
+        customer: formState.customer }}}).catch((error) => {
         console.error('Error adding job:', error);
       });
     }
@@ -77,7 +82,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
       description: '',
       status: 'pending',
       dueDate: '',
-      customerId: ''
+      customer: ''
     });
   };
 
@@ -132,9 +137,9 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
 
         <label htmlFor="customerId">Customer:</label>
         <select
-          id="customerId"
-          name="customerId"
-          value={formState.customerId}
+          id="customer"
+          name="customer"
+          value={formState.customer}
           onChange={handleChange}
           required
         >

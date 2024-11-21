@@ -27,10 +27,10 @@ const customerSchema = new Schema<ICustomer>(
         address: { 
             type: String 
         },
-        jobs: {
+        jobs: [{
             type: Schema.Types.ObjectId, 
             ref: 'Job'
-        }
+        }]
     },
     {
         timestamps: true,
