@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.landing-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.landing-card {
+    background-color:  #ced2d9;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    padding: 30px;
+    width: 350px; 
+    height: 450px;
+    text-align: center;
+}
+
+
+.landing-logo {
+    width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+
+.landing-buttons {
+    display: flex;
+    flex-direction: column; 
+    gap: 50px; 
+    margin-top: 10px;
+}
+
+
+.landing-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    width: 100%; 
+}
+
+.landing-button:hover {
+    background-color: #154c63;
+
+}
