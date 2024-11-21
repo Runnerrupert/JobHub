@@ -1,8 +1,5 @@
-// import { Link } from 'react-router-dom';
-// import { useQuery } from '@apollo/client';
-import { Layout, Menu, Button, Row, Col, Card, Typography, List } from 'antd';
-import { Link } from 'react-router-dom';
-
+import { Layout, Menu, Row, Col, Card, Typography, List } from "antd";
+import Navbar from "../components/Navbar";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -28,12 +25,10 @@ return (
   <Layout>
     {/* Navigation Bar */}
     <Header className="header">
+      <Navbar/>
       <Menu mode="horizontal" defaultSelectedKeys={['schedule']} style={{ flex: 1 }}>
-        <Menu.Item key="customers"><Link to="/customers">Customers</Link></Menu.Item>
-        <Menu.Item key="employees"><Link to="/employees">Employees</Link></Menu.Item>
         <Menu.Item key="schedule"><strong>Schedule</strong></Menu.Item>
       </Menu>
-      <Button type="primary" style={{ marginLeft: 'auto' }}>Logout</Button>
     </Header>
 
   {/* Main Content Area */}
@@ -58,7 +53,7 @@ return (
                   dataSource={customer.jobs}
                   renderItem={(job) => (
                     <List.Item>
-                      {job.title} 
+                      {job.title}
                     </List.Item>
                   )}
                 />
