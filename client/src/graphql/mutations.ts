@@ -2,30 +2,26 @@ import { gql } from '@apollo/client';
 
 // Add customer
 export const ADD_CUSTOMER = gql`
-  mutation AddCustomer($name: String!, $email: String!, $phoneNumber: String, $address: String) {
-    addCustomer(name: $name, email: $email, phoneNumber: $phoneNumber, address: $address) {
+  mutation AddCustomer($input: AddCustomerInput!) {
+    addCustomer(input: $input) {
       id
       name
       email
       phoneNumber
       address
-      createdAt
-      updatedAt
     }
   }
 `;
 
 // Update customer
 export const UPDATE_CUSTOMER = gql`
-  mutation UpdateCustomer($id: ID!, $name: String, $email: String, $phoneNumber: String, $address: String) {
-    updateCustomer(id: $id, name: $name, email: $email, phoneNumber: $phoneNumber, address: $address) {
+  mutation UpdateCustomer($id: ID!, $input: UpdateCustomerInput!) {
+    updateCustomer(id: $id, input: $input) {
       id
       name
       email
       phoneNumber
       address
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -33,7 +29,9 @@ export const UPDATE_CUSTOMER = gql`
 // Delete customer
 export const DELETE_CUSTOMER = gql`
   mutation DeleteCustomer($id: ID!) {
-    deleteCustomer(id: $id)
+    deleteCustomer(id: $id) {
+      id
+    }
   }
 `;
 

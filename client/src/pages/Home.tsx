@@ -1,11 +1,5 @@
-// import { Link } from 'react-router-dom';
-// import { useQuery } from '@apollo/client';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../utils/queries';
-import Auth from '../utils/auth';
-import './Home.css';
+import { Layout, Menu, Row, Col, Card, Typography, List } from "antd";
+import Navbar from "../components/Navbar";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -31,12 +25,10 @@ return (
   <Layout>
     {/* Navigation Bar */}
     <Header className="header">
+      <Navbar/>
       <Menu mode="horizontal" defaultSelectedKeys={['schedule']} style={{ flex: 1 }}>
-        <Menu.Item key="customers"><Link to="/customers">Customers</Link></Menu.Item>
-        <Menu.Item key="employees"><Link to="/employees">Employees</Link></Menu.Item>
         <Menu.Item key="schedule"><strong>Schedule</strong></Menu.Item>
       </Menu>
-      <Button type="primary" style={{ marginLeft: 'auto' }}>Logout</Button>
     </Header>
 
   {/* Main Content Area */}
@@ -61,7 +53,7 @@ return (
                   dataSource={customer.jobs}
                   renderItem={(job) => (
                     <List.Item>
-                      {job.title} - {job.qty}
+                      {job.title}
                     </List.Item>
                   )}
                 />
@@ -80,7 +72,7 @@ return (
                     <Title level={4}>{employee.name}</Title>
                     <List
                       size="small"
-                      dataSource={employee.assignedJobs}
+                      dataSource={employee.assignedJob}
                       renderItem={(job) => <List.Item>{job}</List.Item>}
                     />
                   </List.Item>
