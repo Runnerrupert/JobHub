@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client'
-import { GET_JOBS, GET_EMPLOYEES } from '../graphql/queries';
+import { GET_EMPLOYEES } from '../graphql/queries';
 import { ASSIGN_EMPLOYEES } from '../graphql/mutations';
 import { Job } from '../interfaces/Job';
 
@@ -10,22 +10,22 @@ interface AssignmentFormProps {
 
 const AssignmentForm: React.FC<AssignmentFormProps> = ({ job }) => {
 
-    const { data: jobsData, loading: jobsLoading, error: jobsError } = useQuery(GET_JOBS);
+    // const { data: jobsData, loading: jobsLoading, error: jobsError } = useQuery(GET_JOBS);
     const { data: employeeData, loading: employeeLoading, error: employeeError } = useQuery(GET_EMPLOYEES);
 
-    const [selectedJob, setSelectedJob] = useState<string | null>(job.id)
+    // const [selectedJob, setSelectedJob] = useState<string | null>(job.id)
     const [selectedEmployee, setSelectedEmployee] = useState<string | null>(null)
 
     const [assignJobToEmployee, { loading: assignLoading, error: assignError }] = useMutation(ASSIGN_EMPLOYEES);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (selectedJob && selectedEmployee) {
+        if (selectedEmployee) {
             assignJobToEmployee({
                 variables: {
                     input: {
-                        job: selectedJob,
-                        employee: selectedEmployee,
+                        job: job.id,
+                        employees: [selectedEmployee],
                     },
                 },
                 onCompleted: () => {
@@ -40,14 +40,14 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ job }) => {
         }
     };
 
-    if (jobsLoading || employeeLoading) return <p>Loading...</p>
-    if (jobsError || employeeError) return <p>Error loading data</p>
+    if (employeeLoading) return <p>Loading...</p>
+    if (employeeError) return <p>Error loading data</p>
 
     return (
         <div>
             <h2>Assign Employee to Job</h2>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="jobSelect">Select Job</label>
+                {/* <label htmlFor="jobSelect">Select Job</label>
                 <select
                     id="jobSelect"
                     name="job"
@@ -60,7 +60,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ job }) => {
                             {job.title}
                         </option>
                     })}
-                <select/>
+                <select/> */}
                 <label htmlFor="employeeSelect">Select Employee:</label>
                 <select
                     id="employeeSelect"
@@ -71,7 +71,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ job }) => {
                     <option value="">Select an Employee</option>
                     {employeeData?.employees?.map((employee: { id: string; name: string }) => (
                         <option key={employee.id} value={employee.id}>
-                        {employee.name}
+                            {employee.name}
                         </option>
                 ))}
                 </select>
