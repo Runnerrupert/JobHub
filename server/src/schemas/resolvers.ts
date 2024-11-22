@@ -71,7 +71,7 @@ const resolvers = {
       return await Assignment.find().populate('job employees');
     },
     employees: async () => {
-      return await Employee.find().populate('assignments');
+      return await Employee.find();
     },
   },
   Mutation: {
@@ -141,15 +141,49 @@ const resolvers = {
     },
     deleteCustomer: async(_parent: any, { id }: { id: string; }) => {
       try {
+        const customer = await Customer.findById(id);
+        if (!customer) {
+          throw new Error("No Customer found with that ID");
+        }
+    
+        const jobs = await Job.find({ customer: id });
+        
+        if (jobs.length > 0) {
+          const jobIds = jobs.map((job) => job.id);
+          const assignments = await Assignment.find({ job: { $in: jobIds } });
+    
+          if (assignments.length > 0) {
+            const employeeIds = assignments.map((assignment) => assignment.employees).flat();
+            
+            await Employee.updateMany(
+              { _id: { $in: employeeIds } },
+              { $pull: { jobs: { $in: jobIds } } }
+            );
+            
+            console.log(`Unlinked ${employeeIds.length} employees from the deleted jobs.`);
+    
+            await Assignment.deleteMany({ job: { $in: jobIds } });
+            console.log(`Deleted ${assignments.length} assignments related to the jobs.`);
+          } else {
+            console.log("No assignments found for these jobs.");
+          }
+    
+          await Job.deleteMany({ customer: id });
+          console.log(`Deleted ${jobs.length} jobs related to the customer.`);
+        } else {
+          console.log("No jobs found for this customer.");
+        }
+    
         const deletedCustomer = await Customer.findByIdAndDelete(id);
-
+    
         if (!deletedCustomer) {
           throw new Error("No Customer found with that ID");
         }
-        return deletedCustomer;
+    
+        return deletedCustomer; 
       } catch (error) {
         console.error(error);
-        throw new Error("An error occured when deleting customer");
+        throw new Error("An error occurred when deleting the customer");
       }
     },
     addJob: async (_parent: any, { input }: { input: JobInput }) => {
@@ -191,18 +225,45 @@ const resolvers = {
     },
     deleteJob: async(_parent: any, { id }: { id: string; }) => {
       try {
+        const jobToDelete = await Job.findById(id);
+        if (!jobToDelete) {
+          throw new Error("No Job found with that ID");
+        }
+    
+        const assignments = await Assignment.find({ job: id });
+    
+        if (assignments.length > 0) {
+          const employeeIds = assignments.map((assignment) => assignment.employees).flat();
+    
+          await Employee.updateMany(
+            { _id: { $in: employeeIds } },
+            { $pull: { jobs: id } }
+          );
+    
+          console.log(`Unlinked ${employeeIds.length} employees from the deleted job.`);
+          
+          await Assignment.deleteMany({ job: id });
+          console.log(`Deleted ${assignments.length} assignments for the job.`);
+        } else {
+          console.log("No assignments found for this job.");
+        }
+    
         const deletedJob = await Job.findByIdAndDelete(id);
-
         if (!deletedJob) {
           throw new Error("No Job found with that ID");
         }
+    
+        console.log(`Deleted job with ID: ${id}`);
         return deletedJob;
       } catch (error) {
         console.error(error);
-        throw new Error("An error occured when deleting job");
+        throw new Error("An error occurred when deleting the job");
       }
     },
+
+    // Singular
     assignEmployee: async(_parent: any, { input }: { input: AssignEmployeeInput }) => {
+      console.log('assignEmployee mutation called');
       const { job, employee } = input;
 
       const jobExists = await Job.findById(job);
@@ -228,6 +289,8 @@ const resolvers = {
       await newAssignment.save();
       return newAssignment.populate("job employees")
     },
+
+    // Plural Assignment
     assignEmployees: async (_parent: any, { input }: { input: AssignEmployeesInput }) => {
       const { job, employees } = input;
 
@@ -240,6 +303,14 @@ const resolvers = {
       if (employeeList.length !== employees.length) {
         throw new Error("Some employees not found");
       }
+
+      const existingAssignment = await Assignment.findOne({ job, employees: { $in: [employees] } });
+      if (existingAssignment) {
+        throw new Error("Employee is already assigned to this job");
+      }
+
+      console.log("Existing Assignment: ", existingAssignment);
+      console.log('Job:', job, 'Employees', employees);
 
       const newAssignment = new Assignment({
         job: job,
@@ -297,18 +368,45 @@ const resolvers = {
     },
     deleteEmployee: async(_parent: any, { id }: { id: string; }) => {
       try {
-        const deletedEmployee = await Employee.findByIdAndDelete(id);
-
-        if (!deletedEmployee) {
-          throw new Error("No Employee found with that ID");
+        const employeeToDelete = await Employee.findById(id);
+        if (!employeeToDelete) {
+          throw new Error("Employee not found");
         }
+    
+        const assignments = await Assignment.find({ employees: id });
+    
+        for (const assignment of assignments) {
+          if (assignment.employees.length === 1) {
+            await Assignment.findByIdAndDelete(assignment._id);
+            console.log(`Deleted assignment with ID: ${assignment._id} as it had only this employee.`);
+          } else {
+            await Assignment.findByIdAndUpdate(
+              assignment._id,
+              { $pull: { employees: id } }, 
+              { new: true } 
+            );
+            console.log(`Removed employee ${id} from assignment with ID: ${assignment._id}`);
+          }
+        }
+    
+        const deletedEmployee = await Employee.findByIdAndDelete(id);
+        if (!deletedEmployee) {
+          throw new Error("Failed to delete employee");
+        }
+    
+        console.log(`Deleted employee with ID: ${id}`);
         return deletedEmployee;
       } catch (error) {
         console.error(error);
-        throw new Error("An error occured when deleting Employee");
+        throw new Error("An error occurred while deleting the employee");
       }
     },
   },
+  Employee: {
+    assignments: async (parent: any) => {
+      return Assignment.find({ employees: parent._id }).populate('job');
+    },
+  }
 };
 
 export default resolvers;

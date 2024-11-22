@@ -45,8 +45,8 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ editEmployee }) => {
                 <p>E-mail: {employee.email}</p>
                 <p>Phone: {employee.phoneNumber}</p>
                 <p>Role: {employee.role}</p>
-
                 <h3>Assignments</h3>
+                
                 {employee.assignments && employee.assignments.length > 0 ? (
                     <ul>
                         {employee.assignments.map((assignment: { job: { id: string, title: string, description: string } }) => (
