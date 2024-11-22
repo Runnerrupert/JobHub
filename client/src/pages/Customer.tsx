@@ -3,6 +3,7 @@ import CustomerForm from '../components/CustomerForm';
 import CustomerList from '../components/CustomerList';
 import Navbar from '../components/Navbar';
 import type { Customer } from '../interfaces/Customer';
+import '../styles/customer.css';
 
 const Customer: React.FC = () => {
   const [editingCustomer, setEditingCustomer] = React.useState<Customer | null> (null);
