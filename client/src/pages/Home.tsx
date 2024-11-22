@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import enUS from 'date-fns/locale/en-US';
+import { enUS } from 'date-fns/locale/en-US';
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -19,7 +19,20 @@ const Home = () => {
     getDay,
     locales,
   });
-  
+
+  const events = [
+    {
+      title: 'Team Meeting',
+      start: new Date(2024, 10, 24, 10, 0), // November 24, 2024, at 10:00 AM
+      end: new Date(2024, 10, 24, 11, 0), // November 24, 2024, at 11:00 AM
+    },
+    {
+      title: 'Project Deadline',
+      start: new Date(2024, 10, 25, 14, 0), // November 25, 2024, at 2:00 PM
+      end: new Date(2024, 10, 25, 15, 0), // November 25, 2024, at 3:00 PM
+    },
+  ];
+
   const customers = [
     {
       name: 'John Doe',
@@ -54,7 +67,7 @@ return (
             {/* Placeholder for Calendar */}
             <Card title="Calendar" className="calendar-card" style={{ marginBottom: '20px' }}>
               <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                Calendar goes here
+                <Calendar localizer={localizer} events={events} startAccessor="start" endAccessor="end" style={{ height: '100%', width: '100%' }} />
               </div>
             </Card>
 
