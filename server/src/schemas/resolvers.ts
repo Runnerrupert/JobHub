@@ -34,7 +34,12 @@ interface JobInput {
   customer: string;
 }
 
-interface AssignmentInput {
+interface AssignEmployeeInput {
+  job: string;
+  employee: string;
+}
+
+interface AssignEmployeesInput {
   job: string;
   employees: string[];
 }
@@ -55,6 +60,9 @@ const resolvers = {
   Query: {
     customers: async () => {
       return await Customer.find().populate('jobs');
+    },
+    job: async(assignment: any) => {
+      return await Job.findById(assignment.job);
     },
     jobs: async () => {
       return await Job.find().populate('customer');
@@ -194,10 +202,33 @@ const resolvers = {
         throw new Error("An error occured when deleting job");
       }
     },
-    // assignEmployee: async(_parent: any) => {
+    assignEmployee: async(_parent: any, { input }: { input: AssignEmployeeInput }) => {
+      const { job, employee } = input;
 
-    // },
-    addAssignment: async (_parent: any, { input } : { input: AssignmentInput }) => {
+      const jobExists = await Job.findById(job);
+      if(!jobExists) {
+        throw new Error("Job not found");
+      }
+
+      const employeeExists = await Employee.findById(employee);
+      if(!employeeExists) {
+        throw new Error("Employee not found");
+      }
+
+      const existingAssignment = await Assignment.findOne({ job, employees: { $in: [employee] } });
+      if (existingAssignment) {
+        throw new Error("Employee is already assigned to this job");
+      }
+
+      const newAssignment = new Assignment({
+        job: job,
+        employees: [employee]
+      })
+
+      await newAssignment.save();
+      return newAssignment.populate("job employees")
+    },
+    assignEmployees: async (_parent: any, { input }: { input: AssignEmployeesInput }) => {
       const { job, employees } = input;
 
       const jobExists = await Job.findById(job);
@@ -212,13 +243,13 @@ const resolvers = {
 
       const newAssignment = new Assignment({
         job: job,
-        employees: employees,
+        employees: employees, 
       });
 
       await newAssignment.save();
+
       return newAssignment.populate("job employees");
     },
-
     updateAssignment: async (_parent: any, { id, input }: { id: string, input: Partial<AssignmentType>}) => {
       const updatedAssignment = await Assignment.findByIdAndUpdate(id, { ...input, updatedAt: new Date() }, { new: true });
 

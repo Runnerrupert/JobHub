@@ -6,9 +6,10 @@ import { Job } from '../interfaces/Job';
 
 interface JobListProps {
     editJob: (job: Job) => void;
+    assignJob: (job: Job) => void;
 }
 
-const JobList: React.FC<JobListProps> = ({ editJob }) => {
+const JobList: React.FC<JobListProps> = ({ editJob, assignJob }) => {
     const { loading, error, data } = useQuery(GET_JOBS)
 
     const [deleteJob] = useMutation(DELETE_JOB, {
@@ -45,6 +46,7 @@ const JobList: React.FC<JobListProps> = ({ editJob }) => {
                 <p>Customer: {job.customer ? job.customer.name : 'No customer Assigned'}</p>
                 <button onClick={() => editJob(job)}>Edit</button>
                 <button onClick={() => handleDeleteJob(job.id)}>Delete</button>
+                <button onClick={() => assignJob(job)}>Assign Employee</button>
             </div>
             ))}
         </div>

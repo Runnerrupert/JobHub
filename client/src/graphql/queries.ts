@@ -95,6 +95,13 @@ export const GET_EMPLOYEES = gql`
       email
       phoneNumber
       role
+      assignments {
+        job {
+          id
+          title
+          description
+        }
+      }
     }
   }
 `;
