@@ -16,10 +16,21 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ job }) => {
     // const [selectedJob, setSelectedJob] = useState<string | null>(job.id)
     const [selectedEmployee, setSelectedEmployee] = useState<string | null>(null)
 
-    const [assignJobToEmployee, { loading: assignLoading, error: assignError }] = useMutation(ASSIGN_EMPLOYEES);
+    const [assignJobToEmployee, { loading: assignLoading, error: assignError }] = useMutation(ASSIGN_EMPLOYEES, {
+        refetchQueries: [{ query: GET_EMPLOYEES }],
+        onCompleted: () => {
+            console.log("Employee assigned to job successfully!");
+        },
+        onError: (error) => {
+            console.error("Error assigning Employee", error.message);
+        }
+    });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        console.log("Selected Employee ID: ", selectedEmployee);
+
         if (selectedEmployee) {
             assignJobToEmployee({
                 variables: {
