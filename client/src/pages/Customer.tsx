@@ -13,13 +13,16 @@ const Customer: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="customer-page">
       <Navbar />
-      <div>
-        <h1>This is the Customer Page</h1>
-        {/* // Add forms to add, update, and delete customers */}
-        <CustomerForm customer={editingCustomer} onEditComplete={() => setEditingCustomer(null)} />
-        {/* // Add a table to display all customers */}
+      <div className="customer-content">
+        <h2>Please Enter Customer Information</h2>
+        {/* Form to add, update, and delete customers */}
+        <CustomerForm
+          customer={editingCustomer}
+          onEditComplete={() => setEditingCustomer(null)}
+        />
+        {/* Table to display all customers */}
         <CustomerList editCustomer={handleEditCustomer} />
       </div>
     </div>

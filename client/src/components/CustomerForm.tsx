@@ -87,7 +87,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
 return (
   <div>
-  <form onSubmit={handleSubmit}>
+  <form className="customer-form" onSubmit={handleSubmit}>
     <label htmlFor="customerName">Customer Name:</label>
     <input
       type="text"
