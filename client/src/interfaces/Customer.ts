@@ -1,8 +1,4 @@
-export interface Job {
-    id: string;
-    title: string;
-    status: string;
-}
+import { Job } from "./Job";
 
 export interface Customer {
     id: string;
@@ -10,7 +6,5 @@ export interface Customer {
     email: string;
     phoneNumber: string;
     address: string;
-    createdAt?: string;
-    updatedAt?: string;
     jobs?: Job[];
 }

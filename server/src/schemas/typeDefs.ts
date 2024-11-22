@@ -6,23 +6,14 @@ const typeDefs =`
         email: String!
         phoneNumber: String
         address: String
-        createdAt: String
-        updatedAt: String
         jobs: [Job]
     }
 
-    input AddCustomerInput {
+    input CustomerInput {
         name: String!
         email: String!
         phoneNumber: String!
         address: String!
-    }
-
-    input UpdateCustomerInput {
-        name: String
-        email: String
-        phoneNumber: String
-        address: String
     }
 
     type Job {
@@ -31,26 +22,43 @@ const typeDefs =`
         description: String!
         status: String!
         dueDate: String!
-        customerId: ID!
-        createdAt: String
-        updatedAt: String
+        customer: Customer
+        assignment: Assignment
+    }
+
+    input JobInput {
+        title: String!
+        description: String!
+        status: String!
+        dueDate: String
+        customer: ID!    
+    }
+
+    type Assignment {
+        id: ID!
+        job: Job!
+        employees: [Employee!]
+    }
+
+    input AssignmentInput {
+        job: ID!
+        employees: [ID!]!
     }
 
     type Employee {
         id: ID!
         name: String!
+        email: String!
         phoneNumber: String!
-        jobTitle: String!
-        hireDate: String!
-        createdAt: String
-        updatedAt: String
+        role: String!
+        assignments: [Assignment]
     }
 
-    type Assignment {
-        id: ID!
-        jobId: ID!
-        employeeId: ID!
-        createdAt: String!
+    input EmployeeInput {
+        name: String!
+        email: String!
+        phoneNumber: String!
+        role: String!
     }
 
     type Manager {
@@ -75,41 +83,37 @@ const typeDefs =`
     type Query {
         customers: [Customer]!
         customer(id: ID!): Customer
+
         jobs: [Job]
         job(id: ID!): Job
-        employees: [Employee]
-        employee(id: ID!): Employee
+
         assignments: [Assignment]
-        assignment(id: ID!): Assignment  
+        assignment(id: ID): Assignment 
+         
+        employees: [Employee]!
+        employee(id: ID!): Employee
     }
 
 
     type Mutation {
-
-        addCustomer(input: AddCustomerInput!): Customer!
-
-        updateCustomer(id: ID!, input: UpdateCustomerInput): Customer!
-
+        addCustomer(input: CustomerInput!): Customer
+        updateCustomer(id: ID!, input: CustomerInput!): Customer
         deleteCustomer(id: ID!): Customer
 
-        addJob(title: String!, description: String!, status: String!, dueDate: String!, customerId: ID!): Job
+        addJob(input: JobInput!): Job
+        updateJob(id: ID!, input: JobInput!): Job
+        deleteJob(id: ID!): Job
 
-        updateJob(id: ID!, title: String, description: String, status: String, dueDate: String, customerId: ID): Job
+        addAssignment(input: AssignmentInput!): Assignment
+        updateAssignment(id: ID!, input: AssignmentInput!): Assignment
+        deleteAssignment(id: ID!): Assignment
 
-        deleteJob(id: ID!): Boolean
-
-        addEmployee(name: String!, phoneNumber: String!, jobTitle: String!, hireDate: String!): Employee
-
-        updateEmployee(id: ID!, name: String, phoneNumber: String, jobTitle: String, hireDate: String): Employee
-        
-        deleteEmployee(id: ID!): Boolean
+        addEmployee(input: EmployeeInput!): Employee
+        updateEmployee(id: ID!, input: EmployeeInput!): Employee
+        deleteEmployee(id: ID!): Employee
 
         createAccount(input: CreateAccountInput): Auth
-        
         login(email: String!, password: String!): Auth
     }`
-    
-
-
 
 export default typeDefs

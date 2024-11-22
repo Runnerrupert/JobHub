@@ -6,9 +6,10 @@ import { Customer } from "../interfaces/Customer";
 
 interface CustomerFormProps {
   customer: Customer | null;
+  onEditComplete?: () => void;
 }
 
-const CustomerForm: React.FC<CustomerFormProps> = ({ customer }) => {
+const CustomerForm: React.FC<CustomerFormProps> = ({ customer, onEditComplete }) => {
 const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -28,23 +29,22 @@ const [addCustomer, { loading, error }] = useMutation(ADD_CUSTOMER, {
         address: ''
     });
     setIsCustomerAdded(true);
-},
-  update: (cache, { data: { addCustomer } }) => {
-    const customerData = cache.readQuery<{ customers: Customer[] }>({
-      query: GET_CUSTOMERS,
-    });
-
-    if (customerData && customerData.customers) {
-      cache.writeQuery({
-        query: GET_CUSTOMERS,
-        data: { customers: [...customerData.customers, addCustomer] },
-      });
-    }
   }
 });
 
 const [updateCustomer, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_CUSTOMER, {
-  refetchQueries: [{ query: GET_CUSTOMERS }]
+  refetchQueries: [{ query: GET_CUSTOMERS }],
+  onCompleted: () => {
+    setFormState({
+      name: "",
+      email: "",
+      phoneNumber: "",
+      address: ""
+    })
+    if (onEditComplete) {
+      onEditComplete();
+    }
+  }
 }) 
 
 useEffect(() => {
@@ -54,9 +54,8 @@ useEffect(() => {
       email: customer.email,
       phoneNumber: customer.phoneNumber,
       address: customer.address
-    })
-  }
-}, [customer]);
+    });
+  }}, [customer]);
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -93,7 +92,7 @@ return (
     <input
       type="text"
       id="customerName"
-      name = "name"
+      name= "name"
       value={formState.name}
       onChange={handleChange}
       required

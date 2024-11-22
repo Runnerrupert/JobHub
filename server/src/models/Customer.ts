@@ -5,8 +5,7 @@ interface ICustomer extends Document {
     email: string;
     phoneNumber?: string;
     address?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    jobs?: Schema.Types.ObjectId[];
 }
 
 const customerSchema = new Schema<ICustomer>(
@@ -28,14 +27,10 @@ const customerSchema = new Schema<ICustomer>(
         address: { 
             type: String 
         },
-        createdAt: { 
-            type: Date, 
-            default: Date.now 
-        },
-        updatedAt: { 
-            type: Date, 
-            default: Date.now 
-        }
+        jobs: [{
+            type: Schema.Types.ObjectId, 
+            ref: 'Job'
+        }]
     },
     {
         timestamps: true,

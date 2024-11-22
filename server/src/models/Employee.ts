@@ -3,11 +3,9 @@ import { Schema, model, type Document } from 'mongoose';
 interface IEmployee extends Document {
     name: string;
     email: string;
-    phoneNumber: string;
-    role: string;
-    hireDate: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    phoneNumber?: string;
+    role?: string;
+    assignments?: Schema.Types.ObjectId[];
 }
 
 const employeeSchema = new Schema<IEmployee>(
@@ -29,18 +27,10 @@ const employeeSchema = new Schema<IEmployee>(
         role: {
             type: String
         },
-        hireDate: {
-            type: Date,
-            required: true
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        },
-        updatedAt: {
-            type: Date,
-            default: Date.now
-        }
+        assignments: [{
+            type: Schema.Types.ObjectId, 
+            ref: 'Assignment'
+        }]
     },
     {
         timestamps: true,

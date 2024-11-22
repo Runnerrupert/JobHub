@@ -1,50 +1,143 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useMutation } from "@apollo/client";
+import { ADD_EMPLOYEE, UPDATE_EMPLOYEE } from "../graphql/mutations";
+import { GET_EMPLOYEES } from "../graphql/queries";
+import { Employee } from "../interfaces/Employee"
 
-const EmployeeForm: React.FC = () => {
-  const [name, setName] = useState('');
+interface EmployeeFormProps {
+  employee: Employee | null;
+  onEditComplete?: () => void;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onEditComplete }) => {
+  
+  const [formState, setFormState] = useState({
+    name: '',
+    email: '',
+    phoneNumber: '',
+    role: '',
+  })
+
+  const [isEmployeeAdded, setIsEmployeeAdded] = useState(false);
+
+  const [addEmployee, { loading, error }] = useMutation(ADD_EMPLOYEE, {
+    refetchQueries: [{ query: GET_EMPLOYEES }],
+    onCompleted: () => {
+      setFormState({
+          name: '',
+          email: '',
+          phoneNumber: '',
+          role: '',
+      });
+      setIsEmployeeAdded(true);
+    }
+  });
+
+  const [updateEmployee, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_EMPLOYEE, {
+    refetchQueries: [{ query: GET_EMPLOYEES }],
+    onCompleted: () => {
+      setFormState({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        role: "",
+      })
+      if (onEditComplete) {
+        onEditComplete();
+      }
+    }
+  }) 
+
+  useEffect(() => {
+    if (employee) {
+      setFormState({
+        name: employee.name || "",
+        email: employee.email || "",
+        phoneNumber: employee.phoneNumber || "",
+        role: employee.role || "",
+      })
+    }
+  }, [employee]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Customer added:', name);
-    setName('');
+
+    if (employee) {
+      updateEmployee({ variables: { input: formState, id: employee.id } }).catch((err) => {
+        console.error("Error updating employee: ", err);
+      });
+    } else {
+      addEmployee({ variables: { input: formState }}).catch((error) => {
+        console.error('Error adding employee:', error);
+      });
+    };
+
+    setFormState({
+      name: '',
+      email: '',
+      phoneNumber: '',
+      role: '',
+    })
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="employeeName">Employee Name:</label>
-      <input
-        type="text"
-        id="employeeName"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="employeeName">Employee Name:</label>
+        <input
+          type="text"
+          id="employeeName"
+          name= "name"
+          value={formState.name}
+          onChange={handleChange}
+          required
+        />
 
-      <label htmlFor="employeeEmail">E-mail:</label>
-      <input
-      type="email"
-      id="employeeEmail"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      />
+        <label htmlFor="employeeEmail">E-mail:</label>
+        <input
+          type="email"
+          id="employeeEmail"
+          name="email"
+          value={formState.email}
+          onChange={handleChange}
+          required
+        />
 
-      <label htmlFor="employeePhone">Phone Number:</label>
-      <input
-      type="tel"
-      id="employeePhone"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      />
+        <label htmlFor="employeePhone">Phone Number:</label>
+        <input
+          type="tel"
+          id="employeePhone"
+          name="phoneNumber"
+          value={formState.phoneNumber}
+          onChange={handleChange}
+          required
+        />
 
-      <label htmlFor="role">Address:</label>
-      <input
-      type="text"
-      id="role"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      />
+        <label htmlFor="employeeRole">Role:</label>
+        <input 
+          type="text"
+          id="employeeRole"
+          name="role"
+          value={formState.role}
+          onChange={handleChange}
+          required
+        />
+      <button type="submit" disabled={loading || updateLoading}>
+          {loading || updateLoading ? 'Submitting...' : employee ? 'Update Employee' : 'Add New Employee'}
+      </button>
+      </form>
 
-    <button type="submit">Add New Employee</button>
-    </form>
+      {isEmployeeAdded && <p>Employee added successfully!</p>}
+      {error && <p>Error adding employee, please try again.</p>}
+      {updateError && <p>Error updating employee, please try again.</p>}
+    </div>
   );
 };
 

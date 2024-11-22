@@ -12,12 +12,11 @@ export const GET_CUSTOMERS = gql`
       email
       phoneNumber
       address
-      createdAt
-      updatedAt
       jobs {
         id
         title
         status
+        dueDate
       }
     }
   }
@@ -33,12 +32,11 @@ export const GET_CUSTOMER = gql`
       email
       phoneNumber
       address
-      createdAt
-      updatedAt
       jobs {
         id
         title
         status
+        dueDate
       }
     }
   }
@@ -54,9 +52,10 @@ export const GET_JOBS = gql`
       description
       status
       dueDate
-      customerId
-      createdAt
-      updatedAt
+      customer {
+        id
+        name
+      }
     }
   }
 `;
@@ -71,9 +70,17 @@ export const GET_JOB = gql`
       description
       status
       dueDate
-      customerId
-      createdAt
-      updatedAt
+      customer {
+        id
+        name
+      }
+    }
+    assignment {
+      id
+      employee {
+        id
+        name
+      }
     }
   }
 `;
@@ -85,11 +92,9 @@ export const GET_EMPLOYEES = gql`
     employees {
       id
       name
+      email
       phoneNumber
-      jobTitle
-      hireDate
-      createdAt
-      updatedAt
+      role
     }
   }
 `;
@@ -100,9 +105,14 @@ export const GET_ASSIGNMENTS = gql`
   query GetAssignments {
     assignments {
       id
-      jobId
-      employeeId
-      createdAt
+      job {
+        id
+        title
+      }
+    }
+    employee {
+      id
+      name
     }
   }
 `;
