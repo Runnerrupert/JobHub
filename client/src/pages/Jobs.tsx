@@ -5,7 +5,6 @@ import JobList from '../components/JobList';
 import type { Job } from '../interfaces/Job';
 
 const Jobs: React.FC = () => {
-
     const [editingJob, setEditingJob] = React.useState<Job | null> (null);
 
     const handleEditJob = (job: Job) => {
@@ -19,10 +18,8 @@ const Jobs: React.FC = () => {
                 <h1>This is the Jobs Page</h1>
                 {/* // Add forms to add, update, and delete jobs */}
                 <JobForm job={editingJob} />
-                // Add forms to add, update, and delete jobs.
-
-                <JobList editJob={handleEditJob} />
                 {/* // Add a table to display all jobs */}
+                <JobList editJob={handleEditJob} />
             </div>
         </div>
         

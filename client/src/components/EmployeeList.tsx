@@ -3,7 +3,6 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_EMPLOYEES } from '../graphql/queries';
 import { DELETE_EMPLOYEE } from '../graphql/mutations';
 import { Employee } from '../interfaces/Employee';
-import { Assignment } from '../interfaces/Assignment';
 
 interface EmployeeListProps {
     editEmployee: (employee: Employee) => void;
@@ -37,22 +36,6 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ editEmployee }) => {
         }
     }
 
-    const renderAssignments = (assignments: Assignment[]) => {
-        if (!assignments || assignments.length === 0) {
-            return <p>No jobs assigned</p>
-        }
-
-        return (
-            <ul>
-                {assignments.map((assignments: Assignment) => (
-                    <li key={assignments.id}>
-                        <p>{assignments.title}</p>
-                    </li>
-                ))}
-            </ul>
-        )
-    }
-
     return (
         <div>
             <h2>Employee Info</h2>
@@ -63,7 +46,6 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ editEmployee }) => {
                 <p>Phone: {employee.phoneNumber}</p>
                 <p>Role: {employee.role}</p>
                 <h3>Jobs</h3>
-                {employee.assignments ? renderAssignments(employee.assignments) : <p>No jobs assigned</p>}
                 <button onClick={() => editEmployee(employee)}>Edit</button>
                 <button onClick={() => handleDeleteEmployee(employee.id)}>Delete</button>
             </div>

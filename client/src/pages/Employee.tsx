@@ -18,7 +18,6 @@ const Employee: React.FC = () => {
         <h1>This is the Employee Page</h1>
         {/* // Add forms to add, update, and delete employees */}
         <EmployeeForm employee={editingEmployee} onEditComplete={() => setEditingEmployee(null)}/>
-
         {/* // Add a table to display all employees */}
         <EmployeeList editEmployee={handleEditEmployee}/>
       </div>

@@ -35,7 +35,8 @@ interface JobInput {
 }
 
 interface AssignmentInput {
-  title: string;
+  job: string;
+  employees: string[];
 }
 
 interface EmployeeInput {
@@ -193,35 +194,52 @@ const resolvers = {
         throw new Error("An error occured when deleting job");
       }
     },
+    // assignEmployee: async(_parent: any) => {
+
+    // },
     addAssignment: async (_parent: any, { input } : { input: AssignmentInput }) => {
-      const newAssignment = new Assignment(input);
+      const { job, employees } = input;
+
+      const jobExists = await Job.findById(job);
+      if (!jobExists) {
+        throw new Error("Job not found");
+      }
+
+      const employeeList = await Employee.find({ _id: { $in: employees } });
+      if (employeeList.length !== employees.length) {
+        throw new Error("Some employees not found");
+      }
+
+      const newAssignment = new Assignment({
+        job: job,
+        employees: employees,
+      });
+
       await newAssignment.save();
-      return newAssignment;
+      return newAssignment.populate("job employees");
     },
 
     updateAssignment: async (_parent: any, { id, input }: { id: string, input: Partial<AssignmentType>}) => {
-      const updatedAssignment = await Assignment.findByIdAndUpdate(
-        id,
-        { ...input, updatedAt: new Date().toISOString},
-        { new: true}
-      );
+      const updatedAssignment = await Assignment.findByIdAndUpdate(id, { ...input, updatedAt: new Date() }, { new: true });
+
       if (!updatedAssignment) {
         throw new Error("No Assignment found with that ID");
-      };
+      }
 
       return updatedAssignment;
     },
     deleteAssignment: async(_parent: any, { id }: { id: string; }) => {
       try {
         const deletedAssignment = await Assignment.findByIdAndDelete(id);
-
+    
         if (!deletedAssignment) {
           throw new Error("No Assignment found with that ID");
         }
+    
         return deletedAssignment;
       } catch (error) {
         console.error(error);
-        throw new Error("An error occured when deleting Assignment");
+        throw new Error("An error occurred while deleting the Assignment");
       }
     },
     addEmployee: async (_parent: any, { input } : { input: EmployeeInput }) => {

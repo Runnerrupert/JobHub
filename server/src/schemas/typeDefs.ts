@@ -36,15 +36,13 @@ const typeDefs =`
 
     type Assignment {
         id: ID!
-        title: String!
-        jobId: Job!
-        employeeIds: [Employee!]
+        job: Job!
+        employees: [Employee!]
     }
 
     input AssignmentInput {
-        title: String!
-        jobId: ID!
-        employeeIds: [ID!]!
+        job: ID!
+        employees: [ID!]!
     }
 
     type Employee {

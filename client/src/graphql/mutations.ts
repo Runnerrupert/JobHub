@@ -78,6 +78,12 @@ export const DELETE_JOB = gql`
   }
 `;
 
+// export const ASSIGN_EMPLOYEE = gql`
+//   mutation AssignEmployee($job: ID!, $employee: [ID!]!) {
+    
+//   }
+// `
+
 // Add assignment
 export const ADD_ASSIGNMENT = gql`
   mutation AddAssignment($input: AssignmentInput!) {
@@ -87,7 +93,7 @@ export const ADD_ASSIGNMENT = gql`
         id
         title
       }
-      employee {
+      employees {
         id
         name
       }
@@ -104,7 +110,7 @@ export const UPDATE_ASSIGNMENT = gql`
         id
         title
       }
-      employee {
+      employees {
         id
         name
       }
