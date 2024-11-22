@@ -2,7 +2,8 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_CUSTOMERS } from '../graphql/queries';
 import { DELETE_CUSTOMER } from '../graphql/mutations';
-import { Customer, Job } from '../interfaces/Customer';
+import { Customer } from '../interfaces/Customer';
+import { Job } from '../interfaces/Job';
 
 interface CustomerListProps {
     editCustomer: (customer: Customer) => void;
@@ -61,7 +62,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
                 <h3>{customer.name}</h3>
                 <p>E-mail: {customer.email}</p>
                 <p>Phone: {customer.phoneNumber}</p>
-                <p>{customer.address}</p>
+                <p>Address: {customer.address}</p>
                 <h3>Jobs</h3>
                 {customer.jobs ? renderJobs(customer.jobs) : <p>No jobs assigned</p>}
                 <button onClick={() => editCustomer(customer)}>Edit</button>

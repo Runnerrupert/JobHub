@@ -35,11 +35,14 @@ interface JobInput {
 }
 
 interface AssignmentInput {
-  
+  title: string;
 }
 
 interface EmployeeInput {
-
+  name: string;
+  email: string;
+  phoneNumber: string;
+  role: string;
 }
 
 type CustomerType = typeof Customer.schema.obj;
@@ -59,7 +62,7 @@ const resolvers = {
       return await Assignment.find().populate('job employees');
     },
     employees: async () => {
-      return await Employee.find();
+      return await Employee.find().populate('assignments');
     },
   },
   Mutation: {
@@ -222,15 +225,19 @@ const resolvers = {
       }
     },
     addEmployee: async (_parent: any, { input } : { input: EmployeeInput }) => {
-      const newEmployee = new Employee(input);
+      const newEmployee = new Employee({
+        ...input,
+      })
+
       await newEmployee.save();
+
       return newEmployee;
     },
 
     updateEmployee: async (_parent: any, { id, input }: { id: string, input: Partial<EmployeeType>}) => {
       const updatedEmployee = await Employee.findByIdAndUpdate(
         id,
-        { ...input, updatedAt: new Date().toISOString},
+        { ...input, updatedAt: new Date().toISOString() },
         { new: true}
       );
       if (!updatedEmployee) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_CUSTOMERS, GET_JOBS } from '../graphql/queries';
 import { DELETE_JOB } from '../graphql/mutations';
-import { Job } from '../interfaces/Customer';
+import { Job } from '../interfaces/Job';
 
 interface JobListProps {
     editJob: (job: Job) => void;

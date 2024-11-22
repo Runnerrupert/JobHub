@@ -50,17 +50,17 @@ const typeDefs =`
     type Employee {
         id: ID!
         name: String!
+        email: String!
         phoneNumber: String!
         role: String!
-        hireDate: String!
         assignments: [Assignment]
     }
 
     input EmployeeInput {
         name: String!
+        email: String!
         phoneNumber: String!
         role: String!
-        hireDate: String!
     }
 
     type Manager {
@@ -92,7 +92,7 @@ const typeDefs =`
         assignments: [Assignment]
         assignment(id: ID): Assignment 
          
-        employees: [Employee]
+        employees: [Employee]!
         employee(id: ID!): Employee
     }
 

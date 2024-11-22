@@ -92,16 +92,9 @@ export const GET_EMPLOYEES = gql`
     employees {
       id
       name
+      email
       phoneNumber
       role
-      hireDate
-      assignments {
-        id
-        job {
-          id
-          title
-        }
-      }
     }
   }
 `;

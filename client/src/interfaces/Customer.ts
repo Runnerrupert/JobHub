@@ -1,11 +1,4 @@
-export interface Job {
-    id: string;
-    title: string;
-    description: string;
-    status: 'pending' | 'in-progress' | 'completed'; 
-    dueDate: string; 
-    customer?: Customer;
-}
+import { Job } from "./Job";
 
 export interface Customer {
     id: string;

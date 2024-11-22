@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADD_JOB, UPDATE_JOB } from '../graphql/mutations';
 import { GET_JOBS } from '../graphql/queries';
 import { GET_CUSTOMERS } from '../graphql/queries';
-import { Job } from '../interfaces/Customer';
+import { Job } from '../interfaces/Job';
 import { Customer } from '../interfaces/Customer';
 
 interface JobFormProps {

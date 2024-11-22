@@ -92,7 +92,7 @@ return (
     <input
       type="text"
       id="customerName"
-      name = "name"
+      name= "name"
       value={formState.name}
       onChange={handleChange}
       required

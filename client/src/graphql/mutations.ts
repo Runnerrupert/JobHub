@@ -127,22 +127,22 @@ export const ADD_EMPLOYEE = gql`
     addEmployee(input: $input) {
       id
       name
+      email
       phoneNumber
       role
-      hireDate
     }
   }
 `;
 
 // Update employee
 export const UPDATE_EMPLOYEE = gql`
-  mutation UpdateEmployee($input: EmployeeInput!) {
+  mutation UpdateEmployee($id: ID!, $input: EmployeeInput!) {
     updateEmployee(id: $id, input: $input) {
       id
       name
+      email
       phoneNumber
       role
-      hireDate
     }
   }
 `;
