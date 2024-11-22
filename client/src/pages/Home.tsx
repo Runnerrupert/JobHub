@@ -1,5 +1,7 @@
 import { Layout, Menu, Row, Col, Card, Typography, List } from "antd";
 import Navbar from "../components/Navbar";
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
