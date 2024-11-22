@@ -9,6 +9,17 @@ const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
 const Home = () => {
+
+  const locales = { 'en-US': enUS };
+
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+  });
+  
   const customers = [
     {
       name: 'John Doe',
