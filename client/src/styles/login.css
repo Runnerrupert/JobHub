@@ -14,7 +14,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #449ccf;
+    background-color: var(--main-blue);
     color: white;
     border: none;
     padding: 5px 10px;
@@ -29,7 +29,6 @@
 .back-button a {
     text-decoration: none;
     color: white;
-    background-color: #3b82f6;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
@@ -39,7 +38,7 @@
 
 
 .form-container {
-    background-color: #d1d5db; 
+    background-color: var(--dark-grey); 
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -67,7 +66,7 @@ input[type="email"], input[type="password"] {
 
 
 .submit-button {
-    background-color: #449ccf; 
+    background-color: var(--main-blue); 
     border: none;
     color: white;
     padding: 10px;
@@ -80,13 +79,7 @@ input[type="email"], input[type="password"] {
 }
 
 .submit-button:hover {
-    background-color: #3495c9; 
+    background-color: var(--hover-blue); 
 }
 
-.error-message {
-    color: red;
-    margin-top: 10px;
-    font-size: 14px;
-    text-align: center;
-}
 

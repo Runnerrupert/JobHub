@@ -56,7 +56,6 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
 
     return (
         <div className="customer-list">
-            <h2>Customers</h2>
             {data.customers.map((customer: Customer) => (
                 <div key={customer.id} className="customer-card">
                     <h3>{customer.name}</h3>

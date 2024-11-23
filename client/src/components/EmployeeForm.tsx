@@ -135,7 +135,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onEditComplete })
       </form>
 
       {isEmployeeAdded && <p className='success-message'>Employee added successfully!</p>}
-      {error && <p>Error adding employee, please try again.</p>}
+      {error && <p className='error-message'>Error adding employee, please try again.</p>}
       {updateError && <p>Error updating employee, please try again.</p>}
     </div>
   );

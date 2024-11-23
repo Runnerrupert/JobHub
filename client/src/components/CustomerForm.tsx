@@ -133,7 +133,7 @@ return (
 
     {isCustomerAdded && <p className='success-message'>Customer added successfully!</p>}
     {error && <p>Error, Please try again</p>}
-    {updateError && <p>Error updating customer, please try again</p>}
+    {updateError && <p className='error-message'>Error updating customer, please try again</p>}
   </div>
   );
 };

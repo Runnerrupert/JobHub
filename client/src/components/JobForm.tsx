@@ -90,74 +90,84 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
   if (customersError) return <p>Error loading customers.</p>;
 
   return (
-    <div>
+    <div className="job-form">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="jobTitle">Job Title:</label>
-        <input
-          type="text"
-          id="jobTitle"
-          name="title"
-          value={formState.title}
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label htmlFor="jobTitle">Job Title:</label>
+          <input
+            type="text"
+            id="jobTitle"
+            name="title"
+            value={formState.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <label htmlFor="jobDescription">Description:</label>
-        <input
-          type="text"
-          id="jobDescription"
-          name="description"
-          value={formState.description}
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label htmlFor="jobDescription">Description:</label>
+          <input
+            type="text"
+            id="jobDescription"
+            name="description"
+            value={formState.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <label htmlFor="jobStatus">Status:</label>
-        <select
-          id="jobStatus"
-          name="status"
-          value={formState.status}
-          onChange={handleChange}
-          required
-        >
-          <option value="pending">Pending</option>
-          <option value="in-progress">In Progress</option>
-          <option value="completed">Completed</option>
-        </select>
+        <div className="form-group">
+          <label htmlFor="jobStatus">Status:</label>
+          <select
+            id="jobStatus"
+            name="status"
+            value={formState.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="pending">Pending</option>
+            <option value="in-progress">In Progress</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
 
-        <label htmlFor="jobDueDate">Due Date:</label>
-        <input
-          type="date"
-          id="jobDueDate"
-          name="dueDate"
-          value={formState.dueDate}
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label htmlFor="jobDueDate">Due Date:</label>
+          <input
+            type="date"
+            id="jobDueDate"
+            name="dueDate"
+            value={formState.dueDate}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <label htmlFor="customerId">Customer:</label>
-        <select
-          id="customer"
-          name="customer"
-          value={formState.customer}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select a Customer</option>
-          {customersData?.customers?.map((customer: Customer) => (
-            <option key={customer.id} value={customer.id}>
-              {customer.name}
-            </option>
-          ))}
-        </select>
+        <div className="form-group">
+          <label htmlFor="customerId">Customer:</label>
+          <select
+            id="customer"
+            name="customer"
+            value={formState.customer}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select a Customer</option>
+            {customersData?.customers?.map((customer: Customer) => (
+              <option key={customer.id} value={customer.id}>
+                {customer.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <button type="submit" disabled={loading || updateLoading}>
           {loading || updateLoading ? 'Submitting...' : job ? 'Update Job' : 'Add New Job'}
         </button>
       </form>
 
-      {isJobAdded && <p>Job added successfully!</p>}
-      {error && <p>Error adding job, please try again.</p>}
+      {isJobAdded && <p className="success-message">Job added successfully!</p>}
+      {error && <p className='error-message'>Error adding job, please try again.</p>}
       {updateError && <p>Error updating job, please try again.</p>}
     </div>
   );
