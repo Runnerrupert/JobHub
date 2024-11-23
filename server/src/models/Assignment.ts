@@ -14,7 +14,8 @@ const assignmentSchema = new Schema<IAssignment>(
         },
         employees: [{
             type: Schema.Types.ObjectId,
-            ref: 'Employee'
+            ref: 'Employee',
+            required: true
         }],
     },
     {

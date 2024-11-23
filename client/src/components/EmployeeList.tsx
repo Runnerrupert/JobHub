@@ -45,7 +45,19 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ editEmployee }) => {
                 <p>E-mail: {employee.email}</p>
                 <p>Phone: {employee.phoneNumber}</p>
                 <p>Role: {employee.role}</p>
-                <h3>Jobs</h3>
+                <h3>Assignments</h3>
+                
+                {employee.assignments && employee.assignments.length > 0 ? (
+                    <ul>
+                        {employee.assignments.map((assignment: { job: { id: string, title: string, description: string } }) => (
+                            <li key={assignment.job.id}>
+                                <strong>{assignment.job.title}</strong>: {assignment.job.description}
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No jobs assigned</p>
+                )}
                 <button onClick={() => editEmployee(employee)}>Edit</button>
                 <button onClick={() => handleDeleteEmployee(employee.id)}>Delete</button>
             </div>
