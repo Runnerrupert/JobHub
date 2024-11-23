@@ -117,7 +117,7 @@ const resolvers = {
       return { token, manager };
     },
     addCustomer: async (_parent: any, { input }: { input: CustomerInput }) => {
-
+      
       const newCustomer = new Customer({
         ...input,
       })
@@ -224,35 +224,39 @@ const resolvers = {
       return updatedJob;
     },
     deleteJob: async(_parent: any, { id }: { id: string; }) => {
+      // Finds the Job and any Assignments attached and deltes them all while updating the Employees
       try {
         const jobToDelete = await Job.findById(id);
         if (!jobToDelete) {
           throw new Error("No Job found with that ID");
         }
-    
+        // If Assignments Exist for the Job find them
         const assignments = await Assignment.find({ job: id });
-    
+
         if (assignments.length > 0) {
           const employeeIds = assignments.map((assignment) => assignment.employees).flat();
-    
+          
+          // Update Employees to no longer have the assignment
           await Employee.updateMany(
             { _id: { $in: employeeIds } },
             { $pull: { jobs: id } }
           );
-    
+          
+          // Verification for unlinking Employees, and the number of employees unlinked
           console.log(`Unlinked ${employeeIds.length} employees from the deleted job.`);
           
+          // Deletion of all Assignments associated with the Job
           await Assignment.deleteMany({ job: id });
           console.log(`Deleted ${assignments.length} assignments for the job.`);
         } else {
           console.log("No assignments found for this job.");
         }
-    
+        // Finds the specified Job based on ID and deletes it
         const deletedJob = await Job.findByIdAndDelete(id);
         if (!deletedJob) {
           throw new Error("No Job found with that ID");
         }
-    
+        // Verification for which job was deleted
         console.log(`Deleted job with ID: ${id}`);
         return deletedJob;
       } catch (error) {
