@@ -24,7 +24,10 @@
   },
   "devDependencies": {
     "@cypress/react": "^8.0.2",
+    "@cypress/vite-dev-server": "^5.2.1",
     "@cypress/webpack-dev-server": "^3.11.0",
+    "@types/react": "^17.0.83",
+    "@types/react-dom": "^18.3.1",
     "cypress": "^13.16.0",
     "wait-on": "^7.2.0"
   }
