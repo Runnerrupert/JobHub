@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { mount } from '@cypress/react';
-import Navbar from '../../client/src/components/navbar';
+import Navbar from '@components/Navbar';
 
 describe('Navbar Component', () => {
   it('renders correctly', () => {
