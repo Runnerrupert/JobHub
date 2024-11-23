@@ -17,6 +17,13 @@ const Jobs: React.FC = () => {
         setAssigningJob(job);
     };
 
+    const resetForm = () => {
+        console.log("Resetting Form");
+        setAssigningJob(null);
+    }
+
+    console.log("Current assigningJob: ", assigningJob);
+
     return (
         <div>
             <Navbar/>
@@ -27,7 +34,7 @@ const Jobs: React.FC = () => {
                 {/* // Add a table to display all jobs */}
                 <JobList editJob={handleEditJob} assignJob={handleAssignEmployees} />
 
-                {assigningJob && <AssignmentForm job={assigningJob} />}
+                {assigningJob && <AssignmentForm job={assigningJob} resetForm={resetForm} />}
             </div>
         </div>
         
