@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_EMPLOYEE, UPDATE_EMPLOYEE } from '../graphql/mutations';
 import { GET_EMPLOYEES } from '../graphql/queries';
 import { Employee } from '../interfaces/Employee';
+import '../styles/index.css';
 
 interface EmployeeFormProps {
   employee: Employee | null;

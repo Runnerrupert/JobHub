@@ -10,6 +10,7 @@ import Jobs from './pages/Jobs';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
+import './styles/index.css';
 
 const router = createBrowserRouter([
   {

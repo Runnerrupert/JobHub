@@ -75,10 +75,3 @@
     background-color: #003366;
 }
 
-/* customer added successfully message styling */
-.success-message {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-    text-align: center;
-}

@@ -25,7 +25,7 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ editEmployee }) => {
   }
 
   if (!data || !data.employees || data.employees.length === 0) {
-    return <p>No employees found</p>;
+    return <p className='none-found'>No employees found</p>;
   }
 
   const handleDeleteEmployee = async (id: string) => {

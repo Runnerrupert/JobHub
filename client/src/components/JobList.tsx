@@ -25,7 +25,7 @@ const JobList: React.FC<JobListProps> = ({ editJob }) => {
     }
 
     if (!data || !data.jobs || data.jobs.length === 0) {
-        return <p>No jobs found</p>;
+        return <p className='none-found'>No jobs found</p>;
     }
 
     const handleDeleteJob = (id: string) => {
