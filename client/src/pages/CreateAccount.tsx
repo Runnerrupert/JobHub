@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 
 import Auth from '../utils/auth';
-import '../styles/CreateAccount.css';
+import '../styles/createAccount.css';
 
 const CreateAccount = () => {
     const [email, setEmail] = useState("");

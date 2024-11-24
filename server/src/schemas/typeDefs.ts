@@ -40,9 +40,14 @@ const typeDefs =`
         employees: [Employee!]
     }
 
-    input AssignmentInput {
+    input AssignEmployeeInput {
         job: ID!
-        employees: [ID!]!
+        employee: ID!
+    }
+
+    input AssignEmployeesInput {
+        job: ID!
+        employees: [ID!]
     }
 
     type Employee {
@@ -104,8 +109,9 @@ const typeDefs =`
         updateJob(id: ID!, input: JobInput!): Job
         deleteJob(id: ID!): Job
 
-        addAssignment(input: AssignmentInput!): Assignment
-        updateAssignment(id: ID!, input: AssignmentInput!): Assignment
+        assignEmployee(input: AssignEmployeeInput!): Assignment
+        assignEmployees(input: AssignEmployeesInput!): Assignment
+        updateAssignment(id: ID!, input: AssignEmployeeInput!): Assignment
         deleteAssignment(id: ID!): Assignment
 
         addEmployee(input: EmployeeInput!): Employee

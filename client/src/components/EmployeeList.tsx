@@ -25,28 +25,44 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ editEmployee }) => {
   }
 
   if (!data || !data.employees || data.employees.length === 0) {
-    return <p className='none-found no-employees'>No employees found</p>;
+    return <p className="none-found no-employees">No employees found</p>;
   }
 
   const handleDeleteEmployee = async (id: string) => {
     try {
       await deleteEmployee({ variables: { id } });
-    } catch {
-      console.error('Error deleting employee: ', error);
+    } catch (err) {
+      console.error('Error deleting employee: ', err);
     }
   };
 
   return (
-    
     <div className="employee-list">
+      <h2>Employee Info</h2>
       {data.employees.map((employee: Employee) => (
         <div key={employee.id} className="employee-card">
           <h3>{employee.name}</h3>
-          <p><strong>E-mail:</strong> {employee.email}</p>
-          <p><strong>Phone:</strong> {employee.phoneNumber}</p>
-          <p><strong>Role:</strong> {employee.role}</p>
-          <h4>Jobs</h4>
-          <p>No jobs assigned</p>
+          <p>
+            <strong>E-mail:</strong> {employee.email}
+          </p>
+          <p>
+            <strong>Phone:</strong> {employee.phoneNumber}
+          </p>
+          <p>
+            <strong>Role:</strong> {employee.role}
+          </p>
+          <h3>Assignments</h3>
+          {employee.assignments && employee.assignments.length > 0 ? (
+            <ul>
+              {employee.assignments.map((assignment: { job: { id: string; title: string; description: string } }) => (
+                <li key={assignment.job.id}>
+                  <strong>{assignment.job.title}</strong>: {assignment.job.description}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No jobs assigned</p>
+          )}
           <div className="card-buttons">
             <button onClick={() => editEmployee(employee)}>Edit</button>
             <button onClick={() => handleDeleteEmployee(employee.id)}>Delete</button>

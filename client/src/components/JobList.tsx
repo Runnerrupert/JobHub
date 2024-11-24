@@ -1,18 +1,19 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_CUSTOMERS, GET_JOBS } from '../graphql/queries';
+import { GET_CUSTOMERS, GET_JOBS, GET_EMPLOYEES } from '../graphql/queries';
 import { DELETE_JOB } from '../graphql/mutations';
 import { Job } from '../interfaces/Job';
 
 interface JobListProps {
     editJob: (job: Job) => void;
+    assignJob: (job: Job) => void;
 }
 
-const JobList: React.FC<JobListProps> = ({ editJob }) => {
-    const { loading, error, data } = useQuery(GET_JOBS);
+const JobList: React.FC<JobListProps> = ({ editJob, assignJob }) => {
+    const { loading, error, data } = useQuery(GET_JOBS)
 
     const [deleteJob] = useMutation(DELETE_JOB, {
-        refetchQueries: [{ query: GET_JOBS }, { query: GET_CUSTOMERS }],
+        refetchQueries: [{ query: GET_JOBS }, { query: GET_CUSTOMERS }, { query: GET_EMPLOYEES }],
         onCompleted: () => {
             console.log('Job deleted');
         }
@@ -38,17 +39,18 @@ const JobList: React.FC<JobListProps> = ({ editJob }) => {
         <div className="job-list">
             <h2>Jobs</h2>
             {data.jobs.map((job: Job) => (
-                <div key={job.id} className="job-card">
-                    <h3>{job.title}</h3>
+            <div key={job.id} className="job-card">
+                <h3>{job.title}</h3>
                     <p><strong>Customer:</strong> {job.customer ? job.customer.name : 'No customer assigned'}</p>
                     <p><strong>Description:</strong> {job.description}</p>
                     <p><strong>Status:</strong> {job.status}</p>
                     <p><strong>Due Date:</strong> {new Date(parseInt(job.dueDate, 10)).toLocaleDateString()}</p>
-                    <div className="card-buttons">
-                        <button onClick={() => editJob(job)}>Edit</button>
-                        <button onClick={() => handleDeleteJob(job.id)}>Delete</button>
-                    </div>
+                <div className="card-buttons">
+                <button onClick={() => editJob(job)}>Edit</button>
+                <button onClick={() => handleDeleteJob(job.id)}>Delete</button>
+                <button onClick={() => assignJob(job)}>Assign Employee</button>
                 </div>
+            </div>
             ))}
         </div>
     );
