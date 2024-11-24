@@ -37,7 +37,6 @@ const JobList: React.FC<JobListProps> = ({ editJob, assignJob }) => {
 
     return (
         <div className="job-list">
-            <h2>Jobs</h2>
             {data.jobs.map((job: Job) => (
             <div key={job.id} className="job-card">
                 <h3>{job.title}</h3>
