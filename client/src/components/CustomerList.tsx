@@ -26,7 +26,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
     }
 
     if (!data || !data.customers || data.customers.length === 0) {
-        return <p>No customers found</p>;
+        return <p className='none-found no-customers'>No customers found</p>;
     }
 
     const handleDeleteCustomer = async (id: string) => {
@@ -55,22 +55,25 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
     }
 
     return (
-        <div>
-            <h2>Customer Info</h2>
+        <div className="customer-list">
             {data.customers.map((customer: Customer) => (
-            <div key={customer.id}>
-                <h3>{customer.name}</h3>
-                <p>E-mail: {customer.email}</p>
-                <p>Phone: {customer.phoneNumber}</p>
-                <p>Address: {customer.address}</p>
-                <h3>Jobs</h3>
-                {customer.jobs ? renderJobs(customer.jobs, customer.name) : <p>No jobs assigned</p>}
-                <button onClick={() => editCustomer(customer)}>Edit</button>
-                <button onClick={() => handleDeleteCustomer(customer.id)}>Delete</button>
-            </div>
+                <div key={customer.id} className="customer-card">
+                    <h3>{customer.name}</h3>
+                    <p><strong>E-mail:</strong> {customer.email}</p>
+                    <p><strong>Phone:</strong> {customer.phoneNumber}</p>
+                    <p><strong>Address:</strong> {customer.address}</p>
+                    <h4>Jobs</h4>
+                    {customer.jobs && customer.jobs.length > 0
+                        ? renderJobs(customer.jobs, customer.name)
+                        : <p>No jobs assigned</p>}
+                    <div className="card-buttons">
+                        <button onClick={() => editCustomer(customer)}>Edit</button>
+                        <button onClick={() => handleDeleteCustomer(customer.id)}>Delete</button>
+                    </div>
+                </div>
             ))}
         </div>
-    )
-}
+    );
+};
 
 export default CustomerList;
