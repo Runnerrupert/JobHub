@@ -16,7 +16,7 @@ const Jobs: React.FC = () => {
         <div>
             <Navbar/>
             <div>
-                <h1>Please Enter Job Information</h1>
+                <h2>Please Enter Job Information</h2>
                 {/* // Add forms to add, update, and delete jobs */}
                 <JobForm job={editingJob} />
                 {/* // Add a table to display all jobs */}

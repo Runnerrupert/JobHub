@@ -2,16 +2,24 @@
     --main-blue: #449ccf;
     --hover-blue: #3495c9; 
     --dark-grey: #d1d5db;
-    --light-grey: #f5f5f5
+    --light-grey: #f5f5f5;
 }
 
-/* body {
+html, body, #root {
+    height: 100%; /* Ensure the app and its parent containers span the full viewport height */
     margin: 0;
     padding: 0;
-    font-family: "Montserrat", sans-serif;
-
-  } */
-
+  }
+  
+  main {
+    margin-top: 70px; /* Offset for the fixed navbar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: calc(100vh - 70px); /* Content fills at least the viewport height */
+    box-sizing: border-box; /* Include padding in height calculations */
+  }
 
 
 /* messages*/
@@ -30,28 +38,26 @@
     text-align: center;
 }
 
+
 .none-found {
     text-align: center;
     font-weight: bold;
 }
+
+
+.none-found, .no-employees, .no-customers, .no-jobs {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 
 /* captions */
 
 h2 {
     text-align: center;
     margin: 20px 0;
+    color: #666666;
 }
 
-
-html, body, #root {
-    margin: 0;
-    padding: 0;
-    height: 100%; /* Ensure the app spans the full viewport height */
-    overflow-y: auto; /* Enable vertical scrolling */
-  }
-  
-  main {
-    margin-top: 70px; /* Offset for the fixed navbar */
-    padding: 20px;
-    min-height: calc(100vh - 70px); /* Ensure content fills at least the viewport minus navbar */
-  }

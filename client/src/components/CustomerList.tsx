@@ -26,7 +26,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ editCustomer }) => {
     }
 
     if (!data || !data.customers || data.customers.length === 0) {
-        return <p className='none-found'>No customers found</p>;
+        return <p className='none-found no-customers'>No customers found</p>;
     }
 
     const handleDeleteCustomer = async (id: string) => {
