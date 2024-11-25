@@ -3,12 +3,13 @@ import { useMutation, useQuery } from '@apollo/client'
 import { GET_EMPLOYEES } from '../graphql/queries';
 import { ASSIGN_EMPLOYEES } from '../graphql/mutations';
 import { Job } from '../interfaces/Job';
+import '../styles/assignmentForm.css';
 
 interface AssignmentFormProps {
     job: Job;
     resetForm: () => void;
   }
-
+  
   interface Option {
     value: string;
     label: string;
@@ -63,39 +64,42 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ job, resetForm }) => {
     if (employeeLoading) return <p>Loading...</p>
     if (employeeError) return <p>Error loading data</p>
 
-    
     return (
-        <div className="job-card">
+        <div className="job-card assign-card">
           <h3>Assign Employees</h3>
-          <form onSubmit={handleSubmit}>
-            <p>
-              Assign employees to the job: <strong>{job.title}</strong>
-            </p>
-            <label htmlFor="employeeSelect">Select Employees:</label>
-            <select
-              id="employeeSelect"
-              name="employees"
-              multiple
-              value={selectedEmployees}
-              onChange={(e) => {
-                const selectedOptions = Array.from(e.target.selectedOptions);
-                handleEmployeeChange(selectedOptions);
-              }}
-              className="assign-select"
-            >
-              {employeeData?.employees?.map((employee: { id: string; name: string }) => (
-                <option key={employee.id} value={employee.id}>
-                  {employee.name}
+          <p>
+            Assign employee to the job: <strong>{job.title}</strong>
+          </p>
+          <div className="assign-container">
+            <form onSubmit={handleSubmit} className="assign-form">
+              <select
+                id="employeeSelect"
+                name="employees"
+                multiple
+                value={selectedEmployees}
+                onChange={(e) => {
+                  const selectedOptions = Array.from(e.target.selectedOptions);
+                  handleEmployeeChange(selectedOptions);
+                }}
+                className="assign-select"
+              >
+                <option value="" disabled>
+                  Select An Employee:
                 </option>
-              ))}
-            </select>
-            <button type="submit" disabled={assignLoading} className="assign-button">
-              {assignLoading ? 'Assigning...' : 'Assign Employees'}
-            </button>
-          </form>
-          {assignError && <p className="error-message">Error assigning employees: {assignError.message}</p>}
+                {employeeData?.employees?.map((employee: { id: string; name: string }) => (
+                  <option key={employee.id} value={employee.id}>
+                    {employee.name}
+                  </option>
+                ))}
+              </select>
+              <button type="submit" disabled={assignLoading} className="assign-button">
+                {assignLoading ? 'Assigning...' : 'Assign Employees'}
+              </button>
+            </form>
+          </div>
+          {assignError && <p className="error-message">Error: {assignError.message}</p>}
         </div>
       );
-    };
-    
-    export default AssignmentForm;
+}
+
+export default AssignmentForm;
