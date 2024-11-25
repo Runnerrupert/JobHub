@@ -14,7 +14,8 @@
     "seed": "cd server && npm run seed",
     "build": "cd server && npm run build && cd ../client && npm run build",
     "render-build": "npm install && npm run build",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "test": "cypress run --component"
   },
   "author": "",
   "license": "ISC",
