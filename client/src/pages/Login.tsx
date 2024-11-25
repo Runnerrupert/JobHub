@@ -3,7 +3,7 @@ import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MANAGER } from '../graphql/mutations';
 import { Link, useNavigate } from "react-router-dom";
-import '../styles/Login.css';
+import '../styles/login.css';
 
 const Login = () => {
     const [email, setEmail] = useState("");
