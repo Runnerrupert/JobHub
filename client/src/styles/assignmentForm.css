@@ -1,0 +1,58 @@
+.job-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    width: 300px;
+    background-color: var(--light-grey);
+    font-size: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 800px; /* Adjusted width to make form wider */
+  }
+  
+  .assign-container {
+    display: flex;
+    flex-direction: column; /* dropdown and button stack vertically */
+    align-items: center; 
+    
+  }
+  
+  .assign-form {
+    width: 100%; /* Ensures the form spans the full width */
+    
+  }
+  
+  .assign-select {
+    width: 100%; /* dropdown takes the full width */
+    padding: 10px;
+    margin: 10px 0; /* Space between dropdown and button */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .assign-button {
+    width: 100%; /* Matches the dropdown width */
+    padding: 10px;
+    background-color: #004d99;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .assign-button:hover {
+    background-color: #003366;
+  }
+  
+  .job-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+
+

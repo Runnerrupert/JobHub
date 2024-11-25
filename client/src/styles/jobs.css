@@ -16,7 +16,7 @@ body {
     max-width: 800px; /* Adjusted width to make form wider */
     margin: 20px auto;
     border: 1px solid #ddd;
-    background-color: #fff;
+    background-color: var(--light-grey);
 }
 
 .job-form .form-group {

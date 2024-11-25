@@ -5,6 +5,7 @@ import { format, parse, startOfWeek, getDay } from 'date-fns'; // Import date-fn
 import 'react-big-calendar/lib/css/react-big-calendar.css'; // Styling for the calendar
 import enUS from 'date-fns/locale/en-US'; // Import English locale for date-fns
 
+
 const { Header, Content } = Layout;
 
 const Home = () => {
@@ -39,7 +40,7 @@ return (
     <Header className="header">
       <Navbar/>
       <Menu mode="horizontal" defaultSelectedKeys={['schedule']} style={{ flex: 1 }}>
-        <Menu.Item key="schedule"><strong>Schedule</strong></Menu.Item>
+        <Menu.Item key="schedule" className='schedule'>Schedule</Menu.Item>
       </Menu>
     </Header>
 
@@ -50,14 +51,16 @@ return (
           <Col span={6}>
             {/* Placeholder for Calendar */}
             <Card title="Calendar" className="calendar-card" style={{ marginBottom: '20px' }}>
-              <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Calendar localizer={localizer} 
-                events={events} 
-                startAccessor="start" 
-                endAccessor="end" 
-                style={{ height: '100%', width: '100%' }} />
-              </div>
-            </Card>
+  <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <Calendar
+      localizer={localizer}
+      events={events}
+      startAccessor="start"
+      endAccessor="end"
+      style={{ height: '100%', width: '100%' }}
+    />
+  </div>
+</Card>
           </Col>
       
 {/* Right Content Area - Employees and Assigned Jobs */}
