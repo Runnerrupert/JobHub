@@ -5,6 +5,7 @@ import { ASSIGN_EMPLOYEES } from '../graphql/mutations';
 import { Job } from '../interfaces/Job';
 import '../styles/assignmentForm.css';
 
+// Assignment Props Interface
 interface AssignmentFormProps {
     job: Job;
     resetForm: () => void;
@@ -15,10 +16,10 @@ interface AssignmentFormProps {
     label: string;
   }
 
+// AssignmentForm component that renders everything after pressing the "Assign Employees" button
 const AssignmentForm: React.FC<AssignmentFormProps> = ({ job, resetForm }) => {
 
     const { data: employeeData, loading: employeeLoading, error: employeeError } = useQuery(GET_EMPLOYEES);
-
     const [selectedEmployees, setSelectedEmployees] = useState<string[]>([])
 
     const [assignJobToEmployee, { loading: assignLoading, error: assignError }] = useMutation(ASSIGN_EMPLOYEES, {
