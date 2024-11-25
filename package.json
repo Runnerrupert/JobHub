@@ -5,7 +5,7 @@
   "main": "server/dist/server.js",
   "scripts": {
     "start": "node server/dist/server.js",
-    "start:dev": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev\"",
+    "start:dev": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev -- --config ../vite.config.ts\"",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
     "install": "cd server && npm i && cd ../client && npm i",
@@ -13,14 +13,23 @@
     "client:dev": "cd client && npm run dev",
     "seed": "cd server && npm run seed",
     "build": "cd server && npm run build && cd ../client && npm run build",
-    "render-build": "npm install && npm run build"
+    "render-build": "npm install && npm run build",
+    "cypress": "npx cypress open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "react-router-dom": "^7.0.1"
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.3.3",
+    "cypress": "^13.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ts-node": "^10.9.2",
+    "vite": "^5.4.11",
     "wait-on": "^7.2.0"
   }
 }
