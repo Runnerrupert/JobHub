@@ -19,8 +19,6 @@ Click here to view website: https://jobhub-fxiq.onrender.com
 - [Features](#features)
 - [License](#license)
 - [Credits](#credits)
-- [Tests](#tests)
-- [Credits](#credits)
 - [Contact-Us](#contact-us)
 
 ## Installation
@@ -63,37 +61,45 @@ Then you'll want to navigate back to the client and run npm run dev, and a link 
 
 Landing page, choose to login, or sign up!
 
-![alt text](image-1.png)
+![alt text](client/src/assets/images/landing.png)
 
 Create an account
 
-![alt text](image-2.png)
+![alt text](client/src/assets/images/create-account.png)
 
 Login
 
-![alt text](image-3.png)
+![alt text](client/src/assets/images/login.png)
 
  Add, view, edit, and delete customers on the customer page
 
- ![alt text](image-4.png)
+ * View customers
 
- ![alt text](image-5.png)
+ ![alt text](client/src/assets/images/view-customers.png)
 
-![alt text](image-6.png)
+ * Add customer
 
-![alt text](image-7.png)
+ ![alt text](client/src/assets/images/add-customer.png)
+
+ * Edit customer
+
+![alt text](client/src/assets/images/update-customer.png)
+
+* Delete Customer
+
+![alt text](client/src/assets/images/delete-customer.png)
 
 Add, view, edit and delete employees on the employee page
 
-![alt text](image-8.png)
+![alt text](client/src/assets/images/add-employee.png)
 
 Add a job
 
-![alt text](image-9.png)
+![alt text](client/src/assets/images/add-job.png)
 
 Assign an employee
 
-![alt text](image-10.png)
+![alt text](client/src/assets/images/assign-employee.png)
 
 
 
@@ -110,9 +116,6 @@ Assign an employee
 
 Licensed under MIT.
 Further information on this can be found here: https://choosealicense.com/licenses/mit/
-
-
-## Tests
 
 
 
