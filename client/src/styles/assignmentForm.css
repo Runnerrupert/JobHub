@@ -1,0 +1,58 @@
+.job-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    width: 300px;
+    background-color: #fff;
+    font-size: 1rem;
+    text-align: center; /* Centers content within the card */
+  }
+  
+  .job-card h3 {
+    margin-bottom: 15px;
+  }
+  
+  .assign-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .assign-select {
+    width: 90%; /* Ensure the select box matches card width */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .assign-button {
+    width: 90%; /* Match button width to select box */
+    padding: 10px;
+    background-color: #004d99;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .assign-button:hover {
+    background-color: #003366;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9rem;
+  }
+  
+  /* Flex container for aligning job cards */
+  .job-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+  }

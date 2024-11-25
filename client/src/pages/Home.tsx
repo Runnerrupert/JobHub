@@ -1,25 +1,37 @@
-import { Layout, Menu, Row, Col, Card, Typography, List } from "antd";
+import { Layout, Menu, Row, Col, Card, } from "antd";
 import Navbar from "../components/Navbar";
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar'; //Import Calendar and dateFnsLocalizer from a GitHub repository that I found
+import { format, parse, startOfWeek, getDay } from 'date-fns'; // Import date-fns functions
+import 'react-big-calendar/lib/css/react-big-calendar.css'; // Styling for the calendar
+import enUS from 'date-fns/locale/en-US'; // Import English locale for date-fns
 
 const { Header, Content } = Layout;
-const { Title, Text } = Typography;
 
 const Home = () => {
-  const customers = [
+
+  const locales = { 'en-US': enUS }; // Define the locales object with the English locale
+
+  const localizer = dateFnsLocalizer({// Create a new instance of dateFnsLocalizer with the following options
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+  });
+
+  const events = [ // Define the events array with some sample events
     {
-      name: 'John Doe',
-      address: '123 Main St, USA, US 12345',
-      jobs: [
-        { title: 'Job 1', description: 'Job 1 Description' },
-        { title: 'Job 2', description: 'Job 2 Description' },
-      ],
+      title: 'Team Meeting',
+      start: new Date(2024, 10, 24, 10, 0), // November 24, 2024, at 10:00 AM
+      end: new Date(2024, 10, 24, 11, 0), // November 24, 2024, at 11:00 AM
+    },
+    {
+      title: 'Project Deadline',
+      start: new Date(2024, 10, 25, 14, 0), // November 25, 2024, at 2:00 PM
+      end: new Date(2024, 10, 25, 15, 0), // November 25, 2024, at 3:00 PM
     },
   ];
 
-const employees = [
-  {name: 'John Doe', assignedJob: ['fix plumbing issues', 'install new sink']},
-  {name: 'Jane Doe', assignedJob: ['install new sink', 'fix plumbing issues']},
-];
 
 return (
   <Layout>
@@ -39,47 +51,17 @@ return (
             {/* Placeholder for Calendar */}
             <Card title="Calendar" className="calendar-card" style={{ marginBottom: '20px' }}>
               <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                Calendar goes here
+                <Calendar localizer={localizer} 
+                events={events} 
+                startAccessor="start" 
+                endAccessor="end" 
+                style={{ height: '100%', width: '100%' }} />
               </div>
             </Card>
-
-    {/* Customer and Job List */}
-    {customers.map((customer, index) => (
-              <Card key={index} className="customer-card">
-                <Text strong>{customer.name}</Text>
-                <p>{customer.address}</p>
-                <List
-                  size="small"
-                  dataSource={customer.jobs}
-                  renderItem={(job) => (
-                    <List.Item>
-                      {job.title}
-                    </List.Item>
-                  )}
-                />
-              </Card>
-            ))}
           </Col>
       
 {/* Right Content Area - Employees and Assigned Jobs */}
-<Col span={18}>
-            <Card title="List of Employees and Assigned Jobs">
-              <List
-                itemLayout="vertical"
-                dataSource={employees}
-                renderItem={(employee) => (
-                  <List.Item>
-                    <Title level={4}>{employee.name}</Title>
-                    <List
-                      size="small"
-                      dataSource={employee.assignedJob}
-                      renderItem={(job) => <List.Item>{job}</List.Item>}
-                    />
-                  </List.Item>
-                )}
-              />
-            </Card>
-          </Col>
+
         </Row>
       </Content>
     </Layout>

@@ -4,7 +4,7 @@ import JobForm from '../components/JobForm';
 import JobList from '../components/JobList';
 import AssignmentForm from '../components/AssignmentForm'
 import type { Job } from '../interfaces/Job';
-import '../styles/Jobs.css';
+import '../styles/jobs.css';
 
 const Jobs: React.FC = () => {
     const [editingJob, setEditingJob] = React.useState<Job | null> (null);
