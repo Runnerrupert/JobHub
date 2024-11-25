@@ -7,6 +7,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar'; 
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -14,9 +15,7 @@ const httpLink = createHttpLink({
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
-  // return the headers to the context so httpLink can read them
+  const token = localStorage.getItem('id_token'); // Get the authentication token
   return {
     headers: {
       ...headers,
@@ -26,8 +25,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
+  link: authLink.concat(httpLink), // Attach authLink to requests
   cache: new InMemoryCache(),
 });
 
@@ -35,7 +33,12 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div>
-        <Outlet />
+        <Navbar />
+
+        {/* Offset the content below the navbar */}
+        <main>
+          <Outlet /> {/* This renders the routed content */}
+        </main>
       </div>
     </ApolloProvider>
   );

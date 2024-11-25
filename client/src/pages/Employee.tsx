@@ -3,23 +3,27 @@ import EmployeeForm from '../components/EmployeeForm';
 import EmployeeList from '../components/EmployeeList';
 import Navbar from '../components/Navbar';
 import type { Employee } from '../interfaces/Employee';
+import '../styles/employees.css';
 
 const Employee: React.FC = () => {
-  const [editingEmployee, setEditingEmployee] = React.useState<Employee | null> (null);
+  const [editingEmployee, setEditingEmployee] = React.useState<Employee | null>(null);
 
   const handleEditEmployee = (employee: Employee) => {
     setEditingEmployee(employee);
-  }
+  };
 
   return (
-    <div>
+    <div className="employee-page">
       <Navbar />
-      <div>
-        <h1>This is the Employee Page</h1>
-        {/* // Add forms to add, update, and delete employees */}
-        <EmployeeForm employee={editingEmployee} onEditComplete={() => setEditingEmployee(null)}/>
-        {/* // Add a table to display all employees */}
-        <EmployeeList editEmployee={handleEditEmployee}/>
+      <div className="employee-content">
+        <h2>Please Enter Employee Information</h2>
+        {/* Form to add, update, and delete employees */}
+        <EmployeeForm
+          employee={editingEmployee}
+          onEditComplete={() => setEditingEmployee(null)}
+        />
+        {/* Cards to display all employees */}
+        <EmployeeList editEmployee={handleEditEmployee} />
       </div>
     </div>
   );

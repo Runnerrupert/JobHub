@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import auth from "../utils/auth";
 import '../styles/landingPage.css';
-
 import Logo from '../assets/images/JobHubLogo.png';
 
 const LandingPage = () => {

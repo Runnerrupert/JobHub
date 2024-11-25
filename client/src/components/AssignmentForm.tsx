@@ -9,6 +9,11 @@ interface AssignmentFormProps {
     resetForm: () => void;
   }
 
+  interface Option {
+    value: string;
+    label: string;
+  }
+
 const AssignmentForm: React.FC<AssignmentFormProps> = ({ job, resetForm }) => {
 
     const { data: employeeData, loading: employeeLoading, error: employeeError } = useQuery(GET_EMPLOYEES);
@@ -49,8 +54,9 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({ job, resetForm }) => {
         }
     };
     
-    const handleEmployeeChange = (selectedOptions: any) => {
-        const selectedEmployeeIds = selectedOptions.map((option: any) => option.value);
+    
+    const handleEmployeeChange = (selectedOptions: Option[]) => {
+        const selectedEmployeeIds = selectedOptions.map((option: Option) => option.value);
         setSelectedEmployees(selectedEmployeeIds);
     }
 

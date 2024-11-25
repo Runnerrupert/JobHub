@@ -74,7 +74,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     addCustomer({ variables: { input: formState } }).catch((error) => {
       console.error('Error adding customer:', error);
     });
-  };
+  }
   setFormState({
     name: '',
     email: '',
@@ -87,7 +87,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
 return (
   <div>
-  <form onSubmit={handleSubmit}>
+  <form className="customer-form" onSubmit={handleSubmit}>
     <label htmlFor="customerName">Customer Name:</label>
     <input
       type="text"
@@ -131,9 +131,9 @@ return (
     <button type="submit" disabled={loading || updateLoading}>{loading || updateLoading ? 'Submitting...' : customer ? 'Update Customer' : 'Add New Customer'}</button>
   </form>
 
-    {isCustomerAdded && <p>Customer added successfully!</p>}
+    {isCustomerAdded && <p className='success-message'>Customer added successfully!</p>}
     {error && <p>Error, Please try again</p>}
-    {updateError && <p>Error updating customer, please try again</p>}
+    {updateError && <p className='error-message'>Error updating customer, please try again</p>}
   </div>
   );
 };

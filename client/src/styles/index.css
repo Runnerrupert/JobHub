@@ -1,0 +1,63 @@
+:root {
+    --main-blue: #449ccf;
+    --hover-blue: #3495c9; 
+    --dark-grey: #d1d5db;
+    --light-grey: #f5f5f5;
+}
+
+html, body, #root {
+    height: 100%; /* Ensure the app and its parent containers span the full viewport height */
+    margin: 0;
+    padding: 0;
+  }
+  
+  main {
+    margin-top: 70px; /* Offset for the fixed navbar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: calc(100vh - 70px); /* Content fills at least the viewport height */
+    box-sizing: border-box; /* Include padding in height calculations */
+  }
+
+
+/* messages*/
+
+.error-message .none-found{
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+.none-found {
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.none-found, .no-employees, .no-customers, .no-jobs {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+/* captions */
+
+h2 {
+    text-align: center;
+    margin: 20px 0;
+    color: #666666;
+}
+
