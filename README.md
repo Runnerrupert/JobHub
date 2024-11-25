@@ -2,12 +2,12 @@
 
 ![Deployment Status](https://img.shields.io/badge/render-deployed-green) ![License](https://img.shields.io/badge/license-MIT-yellow) ![Technology](https://img.shields.io/badge/tech-TypeScript-blue)
 
-JobHub is a project built to help managers keep track of their customers, employees, and the jobs assigned to them. 
-Its designed to handle basic tasks like creating and updating customer information, assigning jobs to employees, and
-tracking job statuses. 
+ JobHub is a comprehensive job and task management application designed to streamline the assignment of jobs, scheduling, and employee management for small to medium-sized businesses. The platform allows administrators to efficiently add, modify, and delete jobs, employees, and customers, ensuring that every task is assigned to the right person at the right time.
+With secure login authentication, admins can manage jobs and assignments from a centralized dashboard while ensuring data privacy. Employees can view their assigned tasks, access job details, and stay updated on their schedules, allowing for better organization and productivity.
+Whether you are managing a team of employees or handling multiple clients, JobHub provides an intuitive solution to optimize workload distribution, enhance communication, and keep track of job progress in real time.
 
-This project also serves as a way to explore modern web development tools and techniques, combining a React frontend 
-with a graphql API, and MongoDB for data storage.
+
+Click here to view website: https://jobhub-fxiq.onrender.com
 
 
 
@@ -41,13 +41,59 @@ Then you'll want to navigate back to the client and run npm run dev, and a link 
 
 ## Usage
 
+* User Authentication: 
+    * Login or create an account via the landing page to access the platform's features. 
 
+* Customer Management: 
+    * Create, edit and delete customer profiles, including contact information and address. 
+
+* Employee Management: 
+    * Add, edit and delete employee records with roles and contact details. 
+
+* Job Management: 
+    * Create, edit, and delete job entries.
+    * Assign jobs to employees.
+    * Track and update the status of jobs as they progress. 
+
+* Streamlined Workflow:
+    * Easily manage relationships between customers, employees, and jobs. 
+    * Keep all organizational data centralized and editable for efficient task handling. 
 
 ## Screenshots
 
-Landing page, 
+Landing page, choose to login, or sign up!
 
+![alt text](image-1.png)
 
+Create an account
+
+![alt text](image-2.png)
+
+Login
+
+![alt text](image-3.png)
+
+ Add, view, edit, and delete customers on the customer page
+
+ ![alt text](image-4.png)
+
+ ![alt text](image-5.png)
+
+![alt text](image-6.png)
+
+![alt text](image-7.png)
+
+Add, view, edit and delete employees on the employee page
+
+![alt text](image-8.png)
+
+Add a job
+
+![alt text](image-9.png)
+
+Assign an employee
+
+![alt text](image-10.png)
 
 
 
@@ -63,21 +109,22 @@ Landing page,
 ## License
 
 Licensed under MIT.
+Further information on this can be found here: https://choosealicense.com/licenses/mit/
 
 
 ## Tests
 
 
 
-
 ## Credits
 
-*Cameron Barfuss
-*Mekenna Baker
-*Pedro Chipana
-*Zach Hill
+* Cameron Barfuss
+* Mekenna Baker
+* Pedro Chipana
+* Zach Hill
 
-*Edx Bootcamp Instructors and TAs for guidance.
+* Edx Bootcamp Instructors and TAs for guidance.
+* Documentation sites such as: W3 schools, MDN docs, React docs, and Apollo docs. 
 
 
 ## Contact Us

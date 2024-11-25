@@ -42,7 +42,7 @@ function App() {
 
         {/* Offset the content below the navbar */}
         <main>
-          <Outlet /> {/* This renders the routed content */}
+          <Outlet /> 
         </main>
       </div>
     </ApolloProvider>
